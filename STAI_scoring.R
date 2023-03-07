@@ -27,6 +27,12 @@ print(sapply(df_pilot1$s1, class)) #debugging
 df_pilot1 <- df_pilot1 %>%
   mutate(across(paste0('s', 1:20), as.numeric))
 
+#changing non-responses (5) into mean value
+df_pilot1 <- df_pilot1 %>%
+  mutate(meanVals = (s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8 + s9 + s10 + s11 + s12 + s13 + s14 + s15 + s16 + s17 + s18 + s19 + s20) / 20) %>%
+  mutate(across(paste0('s', 1:20), ~ case_when(. == 5 ~ meanVals, 
+                                              TRUE ~ .)))
+
 #sum STAI score
 df_pilot1 <- df_pilot1 %>% 
   group_by(subjectID) %>%
