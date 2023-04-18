@@ -7,30 +7,65 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## FIRST PLOTS
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r data manipulation, first plot overall}
+plot_ooo_df <- mistake_df %>%
+  count(chosenThreatStatus) %>%
+  mutate(total_observations = nrow(mistake_df)) %>%
+  mutate(percentage_chosenThreatStatus = (n/total_observations)*100)
+plot_ooo_df
 ```
 
-```{r cars}
-ggplot(data =___, mapping = aes(x = Threat Status)) +
-  geom_bar(fill = "steelblue") +
-  labs(title = "graph", x = "Threat Status", y = "Percentage")
+```{r data manipulation, first plot by subject}
+subject_mistake_df <- mistake_df %>%
+  filter(subject == 'a273wocs111dh0')
+
+plot_ooo_df_subjects <- subject_mistake_df %>%
+  count(chosenThreatStatus) %>%
+  mutate(total_observations = nrow(subject_mistake_df)) %>%
+  mutate(percentage_chosenThreatStatus = (n/total_observations)*100)
+plot_ooo_df_subjects
 ```
 
-## Including Plots
+#overall (across subjects)
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r ooo_plot overall, echo=FALSE}
+ggplot(data = plot_ooo_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(x = "Chosen Threat Status", y = "Percentage") +
+  scale_x_discrete(labels = c("neutral", "threat")) 
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+#by subject
+
+```{r ooo_plot by subject, echo=FALSE}
+ggplot(data = plot_ooo_df_subjects, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(x = "Chosen Threat Status", y = "Percentage") +
+  scale_x_discrete(labels = c("neutral", "threat")) 
+```
+
+
+
+##SECOND PLOT
+
+```{r data manipulation}
+
+ooo_df <- ooo_df %>%
+  group_by(subject, chosenThreatStatus) %>%
+  summarize(mean_acc = mean(acc))
+ooo_df
+```
+
+
+```{r ooo_plot, echo=FALSE}
+ggplot(ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill = subject)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Chosen Threat Status", y = "Mean Accuracy", fill = "Subject")
+```
