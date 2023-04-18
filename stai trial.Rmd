@@ -1,0 +1,38 @@
+---
+title: "STAI_scoring_2"
+author: "Brooke Sevchik"
+date: "3/5/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+setwd("~/Documents/GitHub/anxiety_cognitive_maps_analyses")
+library(tidyverse)
+library(dplyr)
+```
+
+```{r setup, include=FALSE}
+#path references
+data_path <- '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot1/STAIscores.csv'
+
+#load data
+df_pilot1 <- read_csv(data_path)
+```
+
+```{r setup, include=FALSE}
+colnames(df_pilot1) <- c('not_included', 'subject', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13', 's14', 's15', 's16', 's17', 's18', 's19', 's20')
+num_rows = nrow(df_pilot1)
+num_rows
+```
+
+```{r setup, include=FALSE}
+df_pilot1 %>%
+  select('subject', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13', 's14', 's15', 's16', 's17', 's18', 's19', 's20')
+df_pilot1
+```
+
+
+
+
+
+

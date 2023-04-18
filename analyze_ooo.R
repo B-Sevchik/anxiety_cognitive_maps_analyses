@@ -1,6 +1,12 @@
 library(tidyverse)
 
-ooo_df <- read_csv("data/oddOneOut.csv")
+#path reference
+data_path <- '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot1/combinedData_Anxiety_Cognitive_Maps.csv' 
+
+#load data
+df <- read_csv(data_path)
+ooo_df <- df %>%
+  filter(taskName == 'oddOneOutTest')
 
 mistake_df <- ooo_df %>% 
   filter(acc == 0) %>% 
