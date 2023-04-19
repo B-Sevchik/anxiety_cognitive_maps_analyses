@@ -26,7 +26,8 @@ plot_ooo_df
 subject_mistake_df <- mistake_df %>%
   filter(subject == 'a273wocs111dh0')
 
-plot_ooo_df_subjects <- subject_mistake_df %>%
+plot_ooo_df_subjects <- mistake_df %>%
+  group_by(subject) %>% 
   count(chosenThreatStatus) %>%
   mutate(total_observations = nrow(subject_mistake_df)) %>%
   mutate(percentage_chosenThreatStatus = (n/total_observations)*100)
@@ -46,9 +47,11 @@ ggplot(data = plot_ooo_df, mapping = aes(x = chosenThreatStatus, y = percentage_
 
 ```{r ooo_plot by subject, echo=FALSE}
 ggplot(data = plot_ooo_df_subjects, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  labs(x = "Chosen Threat Status", y = "Percentage") +
-  scale_x_discrete(labels = c("neutral", "threat")) 
+  # geom_bar(stat = "identity", fill = "steelblue") +
+  # labs(x = "Chosen Threat Status", y = "Percentage") +
+  # scale_x_discrete(labels = c("neutral", "threat")) 
+  geom_boxplot() +
+  geom_jitter(width=0.1)
 ```
 
 
@@ -68,4 +71,10 @@ ooo_df
 ggplot(ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill = subject)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(x = "Chosen Threat Status", y = "Mean Accuracy", fill = "Subject")
+```
+
+```{r ooo_plot, echo=FALSE}
+ggplot(ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
+  geom_boxplot(alpha=0.5) +
+  geom_jitter(width=0.1)
 ```
