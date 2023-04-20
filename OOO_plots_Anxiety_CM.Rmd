@@ -15,23 +15,20 @@ library(ggplot2)
 ## FIRST PLOTS
 
 ```{r data manipulation, first plot overall}
-plot_ooo_df <- mistake_df %>%
+threat_percent_ooo_df <- mistake_df %>%
   count(chosenThreatStatus) %>%
   mutate(total_observations = nrow(mistake_df)) %>%
   mutate(percentage_chosenThreatStatus = (n/total_observations)*100)
-plot_ooo_df
+threat_percent_ooo_df
 ```
 
 ```{r data manipulation, first plot by subject}
-subject_mistake_df <- mistake_df %>%
-  filter(subject == 'a273wocs111dh0')
-
-plot_ooo_df_subjects <- mistake_df %>%
+threat_percent_subjects_df <- mistake_df %>%
   group_by(subject) %>% 
   count(chosenThreatStatus) %>%
   mutate(total_observations = nrow(subject_mistake_df)) %>%
   mutate(percentage_chosenThreatStatus = (n/total_observations)*100)
-plot_ooo_df_subjects
+threat_percent_subjects_df
 ```
 
 #overall (across subjects)
@@ -46,11 +43,8 @@ ggplot(data = plot_ooo_df, mapping = aes(x = chosenThreatStatus, y = percentage_
 #by subject
 
 ```{r ooo_plot by subject, echo=FALSE}
-ggplot(data = plot_ooo_df_subjects, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus)) +
-  # geom_bar(stat = "identity", fill = "steelblue") +
-  # labs(x = "Chosen Threat Status", y = "Percentage") +
-  # scale_x_discrete(labels = c("neutral", "threat")) 
-  geom_boxplot() +
+ggplot(data = plot_ooo_df_subjects, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +
+  geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1)
 ```
 
@@ -58,7 +52,7 @@ ggplot(data = plot_ooo_df_subjects, mapping = aes(x = chosenThreatStatus, y = pe
 
 ##SECOND PLOT
 
-```{r data manipulation}
+```{r data manipulation, second plot}
 
 ooo_df <- ooo_df %>%
   group_by(subject, chosenThreatStatus) %>%
@@ -67,13 +61,8 @@ ooo_df
 ```
 
 
-```{r ooo_plot, echo=FALSE}
-ggplot(ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill = subject)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(x = "Chosen Threat Status", y = "Mean Accuracy", fill = "Subject")
-```
 
-```{r ooo_plot, echo=FALSE}
+```{r ooo_plot, second plot, echo=FALSE}
 ggplot(ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
   geom_boxplot(alpha=0.5) +
   geom_jitter(width=0.1)
