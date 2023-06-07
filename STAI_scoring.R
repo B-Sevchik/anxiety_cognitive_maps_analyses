@@ -61,7 +61,7 @@ df_pilot1 <- df_pilot1 %>%
   mutate(sumVals = s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8 + s9 + s10 + s11 + s12 + s13 + s14 + s15 + s16 + s17 + s18 + s19 + s20)
 
 #classify anxiety levels based on STAI sum
-df_pilot1 <- df_pilot1 %>%
+df_pilot1_STAI <- df_pilot1 %>%
   group_by(subjectID) %>%
   mutate(anxiety_level = case_when(
     sumVals < 37 ~ 'low trait anxiety',

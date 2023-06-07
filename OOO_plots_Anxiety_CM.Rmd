@@ -26,7 +26,7 @@ threat_percent_ooo_df
 threat_percent_subjects_df <- mistake_df %>%
   group_by(subject) %>% 
   count(chosenThreatStatus) %>%
-  mutate(total_observations = nrow(subject_mistake_df)) %>%
+  mutate(total_observations = nrow(mistake_df)) %>%
   mutate(percentage_chosenThreatStatus = (n/total_observations)*100)
 threat_percent_subjects_df
 ```
@@ -34,7 +34,7 @@ threat_percent_subjects_df
 #overall (across subjects)
 
 ```{r ooo_plot overall, echo=FALSE}
-ggplot(data = plot_ooo_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus)) +
+ggplot(data = threat_percent_ooo_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus)) +
   geom_bar(stat = "identity", fill = "steelblue") +
   labs(x = "Chosen Threat Status", y = "Percentage") +
   scale_x_discrete(labels = c("neutral", "threat")) 
@@ -43,7 +43,7 @@ ggplot(data = plot_ooo_df, mapping = aes(x = chosenThreatStatus, y = percentage_
 #by subject
 
 ```{r ooo_plot by subject, echo=FALSE}
-ggplot(data = plot_ooo_df_subjects, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +
+ggplot(data = threat_percent_subjects_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1)
 ```
@@ -54,16 +54,16 @@ ggplot(data = plot_ooo_df_subjects, mapping = aes(x = chosenThreatStatus, y = pe
 
 ```{r data manipulation, second plot}
 
-ooo_df <- ooo_df %>%
+subject_acc_ooo_df <- ooo_df %>%
   group_by(subject, chosenThreatStatus) %>%
   summarize(mean_acc = mean(acc))
-ooo_df
+subject_acc_ooo_df
 ```
 
 
 
 ```{r ooo_plot, second plot, echo=FALSE}
-ggplot(ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
+ggplot(subject_acc_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
   geom_boxplot(alpha=0.5) +
   geom_jitter(width=0.1)
 ```
