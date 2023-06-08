@@ -7,14 +7,25 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
 ```
 
-## FIRST PLOTS
 
-```{r data manipulation, first plot overall}
-threat_percent_ooo_df <- mistake_df %>%
-  count(chosenThreatStatus) %>%
-  mutate(total_observations = nrow(mistake_df)) %>%
-  mutate(percentage_chosenThreatStatus = (n/total_observations)*100)
-threat_percent_ooo_df
+```{r data manipulation for first plot}
+subject_dprime_df <- dprime_df %>%
+  select(subject, transition_threat, dprime)
+subject_dprime_df
 ```
+
+```{r illegal_transition_plot, echo=FALSE}
+ggplot(subject_dprime_df, aes(x = transition_threat, y = dprime, fill=transition_threat)) +
+  geom_boxplot(alpha=0.5) +
+  geom_jitter(width=0.1)
+```
+
+
+
+
+
+
