@@ -23,20 +23,22 @@ transition_type_df <- acc_illegal_df %>%
   ))
 transition_type_df
 
-transition_type_df <- transition_type_df %>%
-  mutate(transition_threat = case_when(
-    (transitionThreatKind == 'threat-threat' | transitionThreatKind == 'threat-neutral' | transitionThreatKind == 'neutral-threat') ~ "contains_threat",
-    (transitionThreatKind == 'neutral-neutral') ~ "no_threat"
-  ))
-transition_type_df
-
 counts_transitionType_df <- transition_type_df %>%
-  group_by(subject, acc_descriptor, transition_threat) %>%
+  group_by(subject, acc_descriptor, transitionThreatKind) %>%
   summarize(count = n()) %>%
   pivot_wider(names_from = acc_descriptor, values_from = count, values_fill = 0)
 counts_transitionType_df
 
-dprime_df <- counts_transitionType_df
-dprime.stats <-psycho::dprime(counts_transitionType_df$hits, counts_transitionType_df$false_alarms, counts_transitionType_df$misses, counts_transitionType_df$correct_rejections)
+transition_threat_kind_df <- counts_transitionType_df %>%
+  mutate(threat_transition = case_when(
+    (transitionThreatKind == 'neutral-neutral') ~ 0,
+    (transitionThreatKind == 'neutral-threat') ~ 1,
+    (transitionThreatKind == 'threat-neutral') ~ 1,
+    (transitionThreatKind == 'threat-threat') ~ 1
+  ))
+transition_threat_kind_df
+
+dprime_df <- transition_threat_kind_df
+dprime.stats <-psycho::dprime(new_df$hits, new_df$false_alarms, new_df$misses, new_df$correct_rejections)
 dprime_df$dprime <- dprime.stats$dprime
 dprime_df

@@ -1,0 +1,20 @@
+---
+title: "illegal_transition_plots_Anxiety_CM"
+author: "Brooke Sevchik"
+date: "6/7/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## FIRST PLOTS
+
+```{r data manipulation, first plot overall}
+threat_percent_ooo_df <- mistake_df %>%
+  count(chosenThreatStatus) %>%
+  mutate(total_observations = nrow(mistake_df)) %>%
+  mutate(percentage_chosenThreatStatus = (n/total_observations)*100)
+threat_percent_ooo_df
+```
