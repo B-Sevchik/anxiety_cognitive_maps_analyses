@@ -67,3 +67,31 @@ ggplot(subject_acc_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosen
   geom_boxplot(alpha=0.5) +
   geom_jitter(width=0.1)
 ```
+
+#PLOTS WITH STAI SCORES ADDED
+
+```{r data manipulation, first plot by subject/STAI version}
+ooo_anxiety_df
+threat_percent_subjects_df <- ooo_anxiety_df  %>%
+  group_by(subject, anxiety_level) %>% 
+  count(chosenThreatStatus) %>%
+  mutate(total_observations = nrow(mistake_df)) %>%
+  mutate(percentage_chosenThreatStatus = (n/total_observations)*100)
+threat_percent_subjects_df
+```
+
+
+
+```{r data manipulation, second plot/STAI version}
+STAI_subject_acc_ooo_df <- merge(ooo_df, df_pilot1_STAI_simple, by = "subject", all = TRUE)
+STAI_subject_acc_ooo_df
+
+STAI_subject_acc_ooo_df <- STAI_subject_acc_ooo_df %>%
+  group_by(subject, chosenThreatStatus, anxiety_level) %>%
+  summarize(mean_acc = mean(acc))
+STAI_subject_acc_ooo_df
+```
+
+
+
+

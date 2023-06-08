@@ -24,7 +24,15 @@ ggplot(subject_dprime_df, aes(x = transition_threat, y = dprime, fill=transition
   geom_jitter(width=0.1)
 ```
 
+#PLOT WITH STAI VERSION
 
+```{r data manipulation for first plot/STAI version}
+illegal_anxiety_df
+
+subject_dprime_df <- illegal_anxiety_df %>%
+  select(subject, transition_threat, dprime, anxiety_level)
+subject_dprime_df
+```
 
 
 

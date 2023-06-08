@@ -40,3 +40,22 @@ dprime_df <- counts_transitionType_df
 dprime.stats <-psycho::dprime(counts_transitionType_df$hits, counts_transitionType_df$false_alarms, counts_transitionType_df$misses, counts_transitionType_df$correct_rejections)
 dprime_df$dprime <- dprime.stats$dprime
 dprime_df
+
+
+###
+### include STAI
+
+#include STAI scores in ooo analyses
+
+df_STAI_illegal <- read_csv('/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot1/STAI_scores_calculated.csv')
+df_STAI_illegal
+
+df_pilot1_STAI_simple <- df_STAI_illegal %>%
+  select(subjectID, anxiety_level)
+df_pilot1_STAI_simple
+
+names(df_pilot1_STAI_simple) <- c('subject', 'anxiety_level')
+df_pilot1_STAI_simple
+
+illegal_anxiety_df <- merge(dprime_df, df_pilot1_STAI_simple, by = "subject", all = TRUE)
+illegal_anxiety_df

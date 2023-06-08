@@ -68,6 +68,7 @@ df_pilot1_STAI <- df_pilot1 %>%
     sumVals >= 38 & sumVals < 44 ~ 'moderate trait anxiety',
     sumVals > 44 ~ 'high trait anxiety'
   ))
+df_pilot1_STAI
 
 #save out the file
 write.csv(df_pilot1, '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot1/STAI_scores_calculated.csv') #EDIT PATH NAME EACH TIME
