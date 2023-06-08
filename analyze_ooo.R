@@ -18,3 +18,20 @@ mistake_df <- ooo_df %>%
                                            otherNode == 3 ~ option3ThreatStatus)) %>% 
   select(subject, trialCount, acc, RT, partResp, chosenThreatStatus, otherNode, otherNodeThreatStatus) %>% 
   filter(chosenThreatStatus != otherNodeThreatStatus)
+
+###
+#include STAI scores in ooo analyses
+
+df_STAI_ooo <- read_csv('/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot1/STAI_scores_calculated.csv')
+df_STAI_ooo
+
+df_pilot1_STAI_simple <- df_STAI_ooo %>%
+  select(subjectID, anxiety_level)
+df_pilot1_STAI_simple
+
+names(df_pilot1_STAI_simple) <- c('subject', 'anxiety_level')
+df_pilot1_STAI_simple
+
+ooo_anxiety_df <- merge(mistake_df, df_pilot1_STAI_simple, by = "subject", all = TRUE)
+ooo_anxiety_df
+
