@@ -34,6 +34,49 @@ subject_dprime_df <- illegal_anxiety_df %>%
 subject_dprime_df
 ```
 
+```{r data manipulation for first plot/STAI version}
+illegal_anxiety_df
+
+subject_dprime_df <- illegal_anxiety_df %>%
+  select(subject, transition_threat, dprime, anxiety_level)
+subject_dprime_df
+
+#high anxiety df, illegal transition
+high_anxiety_illegal_df <- subject_dprime_df %>%
+  filter(anxiety_level == 'high trait anxiety')
+high_anxiety_illegal_df
+
+#moderate anxiety df, illegal transition
+moderate_anxiety_illegal_df <- subject_dprime_df %>%
+  filter(anxiety_level == 'moderate trait anxiety')
+moderate_anxiety_illegal_df
+
+#low anxiety df, illegal transition
+low_anxiety_illegal_df <- subject_dprime_df %>%
+  filter(anxiety_level == 'low trait anxiety')
+low_anxiety_illegal_df
+```
+
+
+```{r illegal_transition_plot, echo=FALSE}
+#high trait anxiety
+ggplot(high_anxiety_illegal_df, aes(x = transition_threat, y = dprime, fill=transition_threat)) +
+  geom_boxplot(alpha=0.5) +
+  geom_jitter(width=0.1) +
+  ggtitle('High Trait Anxiety')
+
+#moderate trait anxiety
+ggplot(moderate_anxiety_illegal_df, aes(x = transition_threat, y = dprime, fill=transition_threat)) +
+  geom_boxplot(alpha=0.5) +
+  geom_jitter(width=0.1) +
+  ggtitle('Moderate Trait Anxiety')
+
+#low trait anxiety
+ggplot(low_anxiety_illegal_df, aes(x = transition_threat, y = dprime, fill=transition_threat)) +
+  geom_boxplot(alpha=0.5) +
+  geom_jitter(width=0.1) +
+  ggtitle('Low Trait Anxiety')
+```
 
 
 
