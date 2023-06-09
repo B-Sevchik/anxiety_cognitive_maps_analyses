@@ -72,13 +72,51 @@ ggplot(subject_acc_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosen
 
 ```{r data manipulation, first plot by subject/STAI version}
 ooo_anxiety_df
-threat_percent_subjects_df <- ooo_anxiety_df  %>%
+threat_percent_anxiety_df <- ooo_anxiety_df  %>%
   group_by(subject, anxiety_level) %>% 
   count(chosenThreatStatus) %>%
   mutate(total_observations = nrow(mistake_df)) %>%
   mutate(percentage_chosenThreatStatus = (n/total_observations)*100)
-threat_percent_subjects_df
+threat_percent_anxiety_df
+
+
+#high anxiety data frame, ooo first plot
+high_anxiety_threat_df <- threat_percent_anxiety_df %>%
+  filter(anxiety_level == 'high trait anxiety')
+high_anxiety_threat_df
+
+#moderate anxiety data frame, ooo first plot
+moderate_anxiety_threat_df <- threat_percent_anxiety_df %>%
+  filter(anxiety_level == 'moderate trait anxiety')
+moderate_anxiety_threat_df
+
+#high anxiety data frame, ooo first plot
+low_anxiety_threat_df <- threat_percent_anxiety_df %>%
+  filter(anxiety_level == 'low trait anxiety')
+low_anxiety_threat_df
 ```
+
+```{r ooo_plot, first plot by subject w STAI included, echo=FALSE}
+
+#high anxiety
+ggplot(data = high_anxiety_threat_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  ggtitle("High Trait Anxiety")
+
+#moderate anxiety
+ggplot(data = moderate_anxiety_threat_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  ggtitle('Moderate Trait Anxiety')
+
+#low anxiety
+ggplot(data = low_anxiety_threat_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  ggtitle ('Low Trait Anxiety')
+```
+
 
 
 
@@ -93,11 +131,38 @@ STAI_subject_acc_ooo_df
 
 #high anxiety data frame, ooo
 high_anxiety_ooo_df <- STAI_subject_acc_ooo_df %>%
-  filter(anxiety_level == 'high')
+  filter(anxiety_level == 'high trait anxiety')
 high_anxiety_ooo_df
 
+#moderate anxiety data frame, ooo
+moderate_anxiety_ooo_df <- STAI_subject_acc_ooo_df %>%
+  filter(anxiety_level == 'moderate trait anxiety')
+moderate_anxiety_ooo_df
+
+#low anxiety data frame, ooo
+low_anxiety_ooo_df <- STAI_subject_acc_ooo_df %>%
+  filter(anxiety_level == 'low trait anxiety')
+low_anxiety_ooo_df
 
 ```
+
+```{r ooo_plot, second plot/STAI version, echo=FALSE}
+ggplot(high_anxiety_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
+  geom_boxplot(alpha=0.5) +
+  geom_jitter(width=0.1) +
+  ggtitle('High Trait Anxiety')
+
+ggplot(moderate_anxiety_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
+  geom_boxplot(alpha=0.5) +
+  geom_jitter(width=0.1) +
+  ggtitle('Moderate Trait Anxiety')
+
+ggplot(low_anxiety_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
+  geom_boxplot(alpha=0.5) +
+  geom_jitter(width=0.1) +
+  ggtitle('Low Trait Anxiety')
+```
+
 
 
 
