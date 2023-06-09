@@ -90,6 +90,13 @@ STAI_subject_acc_ooo_df <- STAI_subject_acc_ooo_df %>%
   group_by(subject, chosenThreatStatus, anxiety_level) %>%
   summarize(mean_acc = mean(acc))
 STAI_subject_acc_ooo_df
+
+#high anxiety data frame, ooo
+high_anxiety_ooo_df <- STAI_subject_acc_ooo_df %>%
+  filter(anxiety_level == 'high')
+high_anxiety_ooo_df
+
+
 ```
 
 
