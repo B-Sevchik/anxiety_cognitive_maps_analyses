@@ -22,6 +22,19 @@ percentage_drop_plot_df <- percentage_drop_threat_df %>%
   mutate(threat_status = gsub("percentage_", "", threat_status))
 percentage_drop_plot_df
 ```
+```{r data manipulation, drop event plot including accuracy requirement}
+percentage_drop_threat_acc_df
+
+#manipulate structure of data frame
+percentage_drop_plot_acc_df <- percentage_drop_threat_acc_df %>%
+  pivot_longer(cols = starts_with("percentage_"),
+               names_to = "threat_status",
+               values_to = "percentage") %>%
+  mutate(threat_status = gsub("percentage_", "", threat_status))
+percentage_drop_plot_acc_df
+```
+
+
 
 
 ```{r drop_event_plot by subject, echo=FALSE}
@@ -35,7 +48,15 @@ ggplot(data = percentage_drop_plot_df, mapping = aes(x = threat_status, y = perc
 ```
 
 
-
+```{r drop_event_plot by subject INCLUDING ACCURACY, echo=FALSE}
+ggplot(data = percentage_drop_plot_acc_df, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  geom_hline(yintercept = 40, linetype = "dotted", color = "blue") +
+  geom_hline(yintercept = 60, linetype = "dotted", color = "red")
+#change labels at some point to reflect that here, "threat_status" refers to which type of image the participant selected first to drag & drop, and "percentage" refers to the percent, for each subject, that out of how many trials it took them to complete the task, on the first attempt the first image they chose to drag & drop was a threat versus a neutral image
+#added the dotted lines here to indicate percent if it was by chance - so 60% for neutral (red dotted line), 40% for threat (blue dotted line)
+```
 
 
 
