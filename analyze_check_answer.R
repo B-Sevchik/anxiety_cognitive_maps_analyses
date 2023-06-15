@@ -8,7 +8,6 @@ check_answer_df_1 <- check_answer_df %>%
   slice(1)
 check_answer_df_1
 
-#clipr::write_clip(check_answer_df_1)   
 
 #CREATE LISTS OF THE THREAT AND NEUTRAL SLOTS FOR EACH SUBJECT
 
@@ -137,6 +136,34 @@ for (subject in unique_subjects) {
 avg_check_answer_acc_df_list
 
 
+#AVERAGE ACROSS SUBJECTS
+
+#set up data frame
+avg_across_check_answer_acc_df <- data.frame(trial = integer(),
+                                      threat = numeric(),
+                                      neutral = numeric(),
+                                      stringsAsFactors = FALSE)
+
+#iterate through each subject
+for (subject in unique_subjects) {
+  accuracy_df_subject_2 <- accuracy_df_list[[subject]]
+  #calculate threat average and neutral average
+  avg_threat_2 <- rowMeans(accuracy_df_subject[, grepl("threat", names(accuracy_df_subject))])
+  avg_neutral_2 <- rowMeans(accuracy_df_subject[, grepl("neutral", names(accuracy_df_subject))])
+  trialCount_2 <- accuracy_df_subject$trialCount
+  #initialize a data frame for the current subject
+  subject_df_2 <- data.frame(trial = trialCount_2,
+                           threat = avg_threat_2,
+                           neutral = avg_neutral_2,
+                           stringsAsFactors = FALSE)
+  #add current subject data frame to final data frame
+  avg_across_check_answer_acc_df <- rbind(avg_across_check_answer_acc_df, subject_df_2)
+}
+#calculate average across subjects
+average_across_df <- avg_across_check_answer_acc_df %>%
+  group_by(trial) %>%
+  summarize(across(c(threat, neutral), mean))
+average_across_df
 
 
 

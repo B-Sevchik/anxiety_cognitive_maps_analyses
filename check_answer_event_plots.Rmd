@@ -4,14 +4,13 @@ author: "Brooke Sevchik"
 date: "6/14/2023"
 output: html_document
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ggplot2)
 ```
 
-```{r data manipulation, drop event plot}
+```{r data manipulation, check answer plot}
 avg_check_answer_acc_df_list
 ```
 
@@ -31,4 +30,22 @@ for (subject in unique_subjects) {
   #print plot for subject
   print(plot)
 }
+```
+
+
+
+#ACROSS SUBJECTS
+
+```{r data manipulation, check answer plot across subjects}
+average_across_df
+```
+
+```{r plot, check answer plot across subjects}
+ggplot(average_across_df) +
+  geom_line(aes(x = trial, y = threat, color = "Threat")) +
+  geom_line(aes(x = trial, y = neutral, color = "Neutral")) + 
+  geom_point(aes(x = trial, y = threat, color = "Threat")) +
+  geom_point(aes(x = trial, y = neutral, color = "Neutral")) +
+  labs(title = "Average Across Subjects", x = "Trial", y = "Accuracy (%)") +
+  scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
 ```
