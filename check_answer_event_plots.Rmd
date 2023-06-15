@@ -1,0 +1,34 @@
+---
+title: "check_answer_plots"
+author: "Brooke Sevchik"
+date: "6/14/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r data manipulation, drop event plot}
+avg_check_answer_acc_df_list
+```
+
+```{r data manipulation & plot, check answer plot}
+#iterate through data frame for each subject
+for (subject in unique_subjects) {
+  #get data frame for current subject
+  subject_df <- avg_check_answer_acc_df_list[[subject]]
+  #make the plot for current subject
+   plot <- ggplot(subject_df) +
+    geom_line(aes(x = trialCount, y = threat, color = "Threat")) +
+    geom_line(aes(x = trialCount, y = neutral, color = "Neutral")) +
+    geom_point(aes(x = trialCount, y = threat, color = "Threat")) +
+    geom_point(aes(x = trialCount, y = neutral, color = "Neutral")) +
+    labs(title = paste("Subject:", subject), x = "Trial", y = "Accuracy (%)") +
+    scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
+  #print plot for subject
+  print(plot)
+}
+```
