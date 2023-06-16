@@ -7,24 +7,79 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
 ```
 
-## R Markdown
+```{r data manipulation, check answer plot}
+check_answer_percent_first_df
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+#manipulate the data frame
+check_answer_percent_plot_df <- check_answer_percent_first_df %>%
+  pivot_longer(cols = c(percent_threat, percent_neutral, percent_equal),
+               names_to = "threat_status",
+               values_to = "percentage")
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+#rename threat status values such that they no longer are called percent_
+check_answer_percent_plot_df$threat_status <- factor(check_answer_percent_plot_df$threat_status,
+                                                 levels = c("percent_threat", "percent_neutral", "percent_equal"),
+                                                 labels = c("threat", "neutral", "equal"))
 
-```{r cars}
-summary(cars)
+#group by subject and threat_status, summarize the percentage
+check_answer_percent_summary <- check_answer_percent_plot_df %>%
+  group_by(subject, threat_status) %>%
+  summarize(percentage = mean(percentage))
+
+check_answer_percent_summary
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r data manipulation & plot, check answer plot}
+ggplot(data = check_answer_percent_summary, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+#last thing is decide if you want to do a separate one for just filtering the first trial!
+
+```{r data manipulation, check answer plot}
+check_answer_percent_first_df_trial1
+
+#manipulate the data frame
+check_answer_percent_first_df_trial1_plot <- check_answer_percent_first_df_trial1 %>%
+  pivot_longer(cols = c(percent_threat, percent_neutral, percent_equal),
+               names_to = "threat_status",
+               values_to = "percentage")
+
+#rename threat status values such that they no longer are called percent_
+check_answer_percent_first_df_trial1_plot$threat_status <- factor(check_answer_percent_first_df_trial1_plot$threat_status,
+                                                 levels = c("percent_threat", "percent_neutral", "percent_equal"),
+                                                 labels = c("threat", "neutral", "equal"))
+
+#group by threat_status, summarize the percentage
+check_answer_percent_summary_trial1 <- check_answer_percent_first_df_trial1_plot %>%
+  group_by(threat_status) %>%
+  summarize(percentage = mean(percentage))
+
+check_answer_percent_summary_trial1
+```
+
+
+
+```{r ooo_plot overall, echo=FALSE}
+#this is the plot for JUST looking at the first trial. Across subjects, decide which
+ggplot(data = check_answer_percent_summary_trial1, mapping = aes(x = threat_status, y = percentage)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(x = "Threat Status", y = "Percentage") +
+  scale_x_discrete(labels = c("threat", "neutral", "equal")) 
+```
+
+
+
+
+
+
+
+

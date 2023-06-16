@@ -132,7 +132,6 @@ for (subject in unique_subjects) {
 }
 first_correct_df_list
 
-##good up to here
 
 #CALCULATE PERCENTAGE OF THREAT FIRST ALL CORRECT VS. NEUTRAL FIRST ALL CORRECT FOR EACH SUBJECT
 
@@ -166,3 +165,50 @@ for (subject in unique_subjects) {
 check_answer_percent_first_df <- data.frame(subject = unique_subjects, percent_threat = percent_threat, percent_neutral = percent_neutral, percent_equal = percent_equal)
 
 check_answer_percent_first_df
+
+
+
+#SECOND VERSION JUST CONSIDERING THE FIRST TRIAL
+
+first_correct_df_list
+
+#initialize new list
+first_row_df_list <- list()
+
+#iterate through each subject, take just the data from the first trial
+for (subject in unique_subjects) {
+  df <- first_correct_df_list[[subject]]
+  first_row_df <- slice(df, 1)  # Slice the data frame to include only the first row
+  first_row_df_list[[subject]] <- first_row_df  # Add the sliced data frame to the new list
+}
+
+first_row_df_list
+
+
+#combine sliced data frames into a single data frame
+combined_df <- bind_rows(first_row_df_list, .id = "subject")
+
+combined_first_row_df
+
+#CALCULATE PERCENTAGE
+
+#calculate number of subjects
+num_subjects <- nrow(combined_first_row_df)
+
+num_threat <- sum(combined_first_row_df$which_was_first == 'threat')
+percent_threat <- ((num_threat/num_subjects) * 100)
+num_neutral <- sum(combined_first_row_df$which_was_first == 'neutral')
+percent_neutral <- ((num_neutral/num_subjects) * 100)
+num_equal <- sum(combined_first_row_df$which_was_first == 'equal')
+percent_threat <- ((num_equal/num_subjects) * 100)
+
+check_answer_percent_first_df_trial1 <- data.frame(percent_threat = percent_threat, percent_neutral = percent_neutral, percent_equal = percent_equal)
+
+check_answer_percent_first_df_trial1
+
+
+
+
+
+
+
