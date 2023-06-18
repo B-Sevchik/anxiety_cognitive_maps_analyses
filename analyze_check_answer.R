@@ -100,7 +100,7 @@ accuracy_df_list
 
 #AVERAGE THE THREAT & NEUTRAL SLOTS TOGETHER
 
-#initilaize empty data frame
+#initialize empty data frame
 avg_check_answer_acc_df <- data.frame(subject = character(),
                        trialCount = integer(),
                        threat = numeric(),
@@ -159,11 +159,76 @@ for (subject in unique_subjects) {
   #add current subject data frame to final data frame
   avg_across_check_answer_acc_df <- rbind(avg_across_check_answer_acc_df, subject_df_2)
 }
+avg_across_check_answer_acc_df
+
 #calculate average across subjects
 average_across_df <- avg_across_check_answer_acc_df %>%
   group_by(trial) %>%
   summarize(across(c(threat, neutral), mean))
 average_across_df
 
+
+#AVERAGE ACROSS SUBJECTS, ADD STAI SCORES
+
+df_pilot1_STAI_simple
+
+#set up data frame
+avg_across_check_low_anxiety_df <- data.frame(trial = integer(),
+                                             threat = numeric(),
+                                             neutral = numeric(),
+                                             stringsAsFactors = FALSE)
+avg_across_check_moderate_anxiety_df <- data.frame(trial = integer(),
+                                             threat = numeric(),
+                                             neutral = numeric(),
+                                             stringsAsFactors = FALSE)
+avg_across_check_high_anxiety_df <- data.frame(trial = integer(),
+                                             threat = numeric(),
+                                             neutral = numeric(),
+                                             stringsAsFactors = FALSE)
+
+
+#iterate through each subject
+for (subject in unique_subjects) {
+  accuracy_df_subject_2 <- accuracy_df_list[[subject]]
+  #calculate threat average and neutral average
+  avg_threat_2 <- rowMeans(accuracy_df_subject[, grepl("threat", names(accuracy_df_subject))])
+  avg_neutral_2 <- rowMeans(accuracy_df_subject[, grepl("neutral", names(accuracy_df_subject))])
+  trialCount_2 <- accuracy_df_subject$trialCount
+  #initialize a data frame for the current subject
+  subject_df_2 <- data.frame(trial = trialCount_2,
+                             threat = avg_threat_2,
+                             neutral = avg_neutral_2,
+                             stringsAsFactors = FALSE)
+  subject_anxiety <- df_pilot1_STAI_simple[df_pilot1_STAI_simple$subject == subject, "anxiety_level"]
+  #add current subject data frame to final data frame
+  if (subject_anxiety == "low trait anxiety"){
+    avg_across_check_low_anxiety_df <- rbind(avg_across_check_low_anxiety_df, subject_df_2)
+  }
+  else if (subject_anxiety == "moderate trat anxiety"){
+    avg_across_check_moderate_anxiety_df <- rbind(avg_across_check_moderate_anxiety_df, subject_df_2)
+  }
+  else if (subject_anxiety == "high trait anxiety"){
+    avg_across_check_high_anxiety_df <- rbind(avg_across_check_high_anxiety_df, subject_df_2)
+  }
+}
+avg_across_check_low_anxiety_df
+avg_across_check_moderate_anxiety_df
+avg_across_check_high_anxiety_df
+
+#calculate average across subjects
+avg_across_low_anxiety_df <- avg_across_check_low_anxiety_df %>%
+  group_by(trial) %>%
+  summarize(across(c(threat, neutral), mean))
+avg_across_low_anxiety_df
+
+avg_across_moderate_anxiety_df <- avg_across_check_moderate_anxiety_df %>%
+  group_by(trial) %>%
+  summarize(across(c(threat, neutral), mean))
+avg_across_moderate_anxiety_df
+
+avg_across_high_anxiety_df <- avg_across_check_high_anxiety_df %>%
+  group_by(trial) %>%
+  summarize(across(c(threat, neutral), mean))
+avg_across_high_anxiety_df
 
 

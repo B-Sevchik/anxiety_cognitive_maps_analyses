@@ -168,6 +168,7 @@ check_answer_percent_first_df
 
 
 
+
 #SECOND VERSION JUST CONSIDERING THE FIRST TRIAL
 
 first_correct_df_list
@@ -186,25 +187,113 @@ first_row_df_list
 
 
 #combine sliced data frames into a single data frame
-combined_df <- bind_rows(first_row_df_list, .id = "subject")
+combined_first_row_df <- bind_rows(first_row_df_list, .id = "subject")
 
 combined_first_row_df
+
 
 #CALCULATE PERCENTAGE
 
 #calculate number of subjects
 num_subjects <- nrow(combined_first_row_df)
 
-num_threat <- sum(combined_first_row_df$which_was_first == 'threat')
-percent_threat <- ((num_threat/num_subjects) * 100)
-num_neutral <- sum(combined_first_row_df$which_was_first == 'neutral')
-percent_neutral <- ((num_neutral/num_subjects) * 100)
-num_equal <- sum(combined_first_row_df$which_was_first == 'equal')
-percent_threat <- ((num_equal/num_subjects) * 100)
+#calculate percentages
+num_threat_first <- sum(combined_first_row_df$which_was_first == 'threat')
+percent_threat_first <- (num_threat_first / num_subjects) * 100
 
-check_answer_percent_first_df_trial1 <- data.frame(percent_threat = percent_threat, percent_neutral = percent_neutral, percent_equal = percent_equal)
+num_neutral_first <- sum(combined_first_row_df$which_was_first == 'neutral')
+percent_neutral_first <- (num_neutral_first / num_subjects) * 100
 
+num_equal_first <- sum(combined_first_row_df$which_was_first == 'equal')
+percent_equal_first <- (num_equal_first / num_subjects) * 100
+
+#create data frame
+check_answer_percent_first_df_trial1 <- data.frame(percent_neutral = percent_neutral_first,
+                            percent_threat = percent_threat_first,
+                            percent_equal = percent_equal_first)
 check_answer_percent_first_df_trial1
+
+
+
+###INCLUDE STAI IN SECOND PLOT
+combined_first_row_df
+
+combined_first_row_df
+df_pilot1_STAI_simple
+
+#merge data frames
+combined_first_row_STAI_df <- merge(df_pilot1_STAI_simple, combined_first_row_df, by = "subject")
+combined_first_row_STAI_df
+
+#create separate merged data frames for low trait anxiety, moderate trait anxiety, and high trait anxiety
+low_first_row_STAI_df <- combined_first_row_STAI_df %>%
+  filter(anxiety_level == 'low trait anxiety')
+low_first_row_STAI_df
+
+moderate_first_row_STAI_df <- combined_first_row_STAI_df %>%
+  filter(anxiety_level == 'moderate trait anxiety')
+moderate_first_row_STAI_df
+
+high_first_row_STAI_df <- combined_first_row_STAI_df %>%
+  filter(anxiety_level == 'high trait anxiety')
+high_first_row_STAI_df
+
+
+#combine the separated data frames into a list
+anxiety_first_row_STAI_list <- list(
+  low_trait_anxiety = low_first_row_STAI_df,
+  moderate_trait_anxiety = moderate_first_row_STAI_df,
+  high_trait_anxiety = high_first_row_STAI_df
+)
+anxiety_first_row_STAI_list
+
+# Access the data frames from the list
+low_trait_anxiety_df <- merged_data_frames$low_trait_anxiety
+moderate_trait_anxiety_df <- merged_data_frames$moderate_trait_anxiety
+high_trait_anxiety_df <- merged_data_frames$high_trait_anxiety
+
+
+#CALCULATE PERCENTAGE
+
+#initialize empty list
+check_answer_percent_first_list <- list()
+
+#iterate through data frames in list
+for (df_name in names(anxiety_first_row_STAI_list)) {
+  df <- anxiety_first_row_STAI_list[[df_name]]
+  
+  #calculate number of subjects
+  num_subjects <- nrow(df)
+  #calculate percentages
+  num_threat_STAI <- sum(df$which_was_first == 'threat')
+  percent_threat_STAI <- (num_threat_STAI / num_subjects) * 100
+  
+  num_neutral_STAI <- sum(df$which_was_first == 'neutral')
+  percent_neutral_STAI <- (num_neutral_STAI / num_subjects) * 100
+  
+  num_equal_STAI <- sum(df$which_was_first == 'equal')
+  percent_equal_STAI <- (num_equal_STAI / num_subjects) * 100
+  
+  #initialize data frame for current iteration
+  check_answer_percent_first_df <- data.frame(percent_neutral = percent_neutral_STAI,
+                                              percent_threat = percent_threat_STAI,
+                                              percent_equal = percent_equal_STAI)
+  
+  #add data frame to the list
+  check_answer_percent_first_list[[df_name]] <- check_answer_percent_first_df
+}
+
+#access the resulting data frames from the list
+check_answer_percent_first_df_low <- check_answer_percent_first_list$low_trait_anxiety
+check_answer_percent_first_df_moderate <- check_answer_percent_first_list$moderate_trait_anxiety
+check_answer_percent_first_df_high <- check_answer_percent_first_list$high_trait_anxiety
+
+check_answer_percent_first_df_low
+check_answer_percent_first_df_moderate
+check_answer_percent_first_df_high
+
+
+
 
 
 
