@@ -60,6 +60,61 @@ ggplot(data = percentage_drop_plot_acc_df, mapping = aes(x = threat_status, y = 
 #added the dotted lines here to indicate percent if it was by chance - so 60% for neutral (red dotted line), 40% for threat (blue dotted line)
 ```
 
+#Including STAI scores/anxiety levels
 
+
+```{r drop_event_plot by subject Anxiety, echo=FALSE}
+#high anxiety plot
+ggplot(data = percentage_drop_plot_high_anxiety, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  geom_hline(yintercept = 40, linetype = "dotted", color = "blue") +
+  geom_hline(yintercept = 60, linetype = "dotted", color = "red")+
+  labs(fill = "Threat Status", x = "Threat Status", y = "Percentage", title = "% High Anxiety Subject Selected Threat vs. Neutral Images on First Drag and Drop")
+
+#moderate anxiety plot
+ggplot(data = percentage_drop_plot_moderate_anxiety, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  geom_hline(yintercept = 40, linetype = "dotted", color = "blue") +
+  geom_hline(yintercept = 60, linetype = "dotted", color = "red")+
+  labs(fill = "Threat Status", x = "Threat Status", y = "Percentage", title = "% Moderate Anxiety Subject Selected Threat vs. Neutral Images on First Drag and Drop")
+
+#low anxiety plot
+ggplot(data = percentage_drop_plot_low_anxiety, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  geom_hline(yintercept = 40, linetype = "dotted", color = "blue") +
+  geom_hline(yintercept = 60, linetype = "dotted", color = "red")+
+  labs(fill = "Threat Status", x = "Threat Status", y = "Percentage", title = "% Low Anxiety Subject Selected Threat vs. Neutral Images on First Drag and Drop")
+```
+
+
+```{r drop_event_plot by subject INCLUDING ACCURACY, echo=FALSE}
+#high anxiety plot
+ggplot(data = percentage_drop_plot_high_anxiety_acc, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  geom_hline(yintercept = 40, linetype = "dotted", color = "blue") +
+  geom_hline(yintercept = 60, linetype = "dotted", color = "red") +
+  labs(fill = "Threat Status", x = "Threat Status", y = "percentage", title = "% High Anxiety Subject Selected Threat vs. Neutral Image on 1st ACCURATE Drop")
+
+#moderate anxiety plot
+ggplot(data = percentage_drop_plot_moderate_anxiety_acc, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  geom_hline(yintercept = 40, linetype = "dotted", color = "blue") +
+  geom_hline(yintercept = 60, linetype = "dotted", color = "red") +
+  labs(fill = "Threat Status", x = "Threat Status", y = "percentage", title = "% Moderate Anxiety Subject Selected Threat vs. Neutral Image on 1st ACCURATE Drop")
+
+#low anxiety plot
+ggplot(data = percentage_drop_plot_low_anxiety_acc, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  geom_hline(yintercept = 40, linetype = "dotted", color = "blue") +
+  geom_hline(yintercept = 60, linetype = "dotted", color = "red") +
+  labs(fill = "Threat Status", x = "Threat Status", y = "percentage", title = "% Low Anxiety Subject Selected Threat vs. Neutral Image on 1st ACCURATE Drop")
+
+```
 
 

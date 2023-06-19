@@ -52,3 +52,54 @@ percentage_drop_threat_acc_df <- drop_combined_trials_acc_df %>%
     percentage_neutral = sum(dragThreat == "neutral") / n() * 100
   )
 percentage_drop_threat_acc_df
+
+
+#INCLUDE STAI SCORES
+
+#STAI scores - not including accuracy
+percentage_drop_plot_df
+
+df_pilot1_STAI_simple
+
+percentage_drop_plot_anxiety_df <- merge(percentage_drop_plot_df, df_pilot1_STAI_simple, by = "subject")
+percentage_drop_plot_anxiety_df
+
+percentage_drop_plot_high_anxiety <- percentage_drop_plot_anxiety_df %>%
+  filter(anxiety_level == "high trait anxiety")
+percentage_drop_plot_high_anxiety
+
+
+percentage_drop_plot_moderate_anxiety <- percentage_drop_plot_anxiety_df %>%
+  filter(anxiety_level == "moderate trait anxiety")
+percentage_drop_plot_moderate_anxiety
+
+
+percentage_drop_plot_low_anxiety <- percentage_drop_plot_anxiety_df %>%
+  filter(anxiety_level == "low trait anxiety")
+percentage_drop_plot_low_anxiety
+
+
+
+#STAI scores - including accuracy
+percentage_drop_plot_acc_df
+
+df_pilot1_STAI_simple
+
+percentage_drop_plot_anxiety_acc_df <- merge(percentage_drop_plot_acc_df, df_pilot1_STAI_simple, by = "subject")
+percentage_drop_plot_anxiety_acc_df
+
+
+percentage_drop_plot_high_anxiety_acc <- percentage_drop_plot_anxiety_acc_df %>%
+  filter(anxiety_level == "high trait anxiety")
+percentage_drop_plot_high_anxiety_acc
+
+
+percentage_drop_plot_moderate_anxiety_acc <- percentage_drop_plot_anxiety_acc_df %>%
+  filter(anxiety_level == "moderate trait anxiety")
+percentage_drop_plot_moderate_anxiety_acc
+
+
+percentage_drop_plot_low_anxiety_acc <- percentage_drop_plot_anxiety_acc_df %>%
+  filter(anxiety_level == "low trait anxiety")
+percentage_drop_plot_low_anxiety_acc
+
