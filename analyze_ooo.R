@@ -18,6 +18,7 @@ mistake_df <- ooo_df %>%
                                            otherNode == 3 ~ option3ThreatStatus)) %>% 
   select(subject, trialCount, acc, RT, partResp, chosenThreatStatus, otherNode, otherNodeThreatStatus) %>% 
   filter(chosenThreatStatus != otherNodeThreatStatus)
+mistake_df
 
 ###
 #include STAI scores in ooo analyses

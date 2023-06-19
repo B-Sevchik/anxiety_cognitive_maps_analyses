@@ -14,7 +14,7 @@ library(ggplot2)
 avg_check_answer_acc_df_list
 ```
 
-```{r data manipulation & plot, check answer plot 1}
+```{r data manipulation & plot, Check Answer Plot 1}
 #iterate through data frame for each subject
 for (subject in unique_subjects) {
   #get data frame for current subject
@@ -32,7 +32,7 @@ for (subject in unique_subjects) {
 }
 ```
 
-```{r data manipulation & plot, check answer plot 1 w STAI scores included}
+```{r data manipulation & plot, Check Answer Plot 1 Anxiety}
 #iterate through data frame for each subject
 for (subject in unique_subjects) {
   #get data frame for current subject
@@ -61,7 +61,7 @@ for (subject in unique_subjects) {
 average_across_df
 ```
 
-```{r plot, check answer plot across subjects}
+```{r plot, Check Answer Plot 2 (Across Subjects)}
 ggplot(average_across_df) +
   geom_line(aes(x = trial, y = threat, color = "Threat")) +
   geom_line(aes(x = trial, y = neutral, color = "Neutral")) + 
@@ -71,13 +71,13 @@ ggplot(average_across_df) +
   scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
 ```
 
-```{r plot, check answer plot across subjects}
+```{r plot, Check Answer Plot 2 Anxiety (across subjects, w STAI scores included)}
 ggplot(avg_across_low_anxiety_df) +
   geom_line(aes(x = trial, y = threat, color = "Threat")) +
   geom_line(aes(x = trial, y = neutral, color = "Neutral")) + 
   geom_point(aes(x = trial, y = threat, color = "Threat")) +
   geom_point(aes(x = trial, y = neutral, color = "Neutral")) +
-  labs(title = "Average Across Subjects with Low Trait Anxiety", x = "Trial", y = "Accuracy (%)") +
+  labs(title = "Check Answer Average Across Subjects with Low Trait Anxiety", x = "Trial", y = "Accuracy (%)") +
   scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
 
 ggplot(avg_across_moderate_anxiety_df) +
@@ -85,7 +85,7 @@ ggplot(avg_across_moderate_anxiety_df) +
   geom_line(aes(x = trial, y = neutral, color = "Neutral")) + 
   geom_point(aes(x = trial, y = threat, color = "Threat")) +
   geom_point(aes(x = trial, y = neutral, color = "Neutral")) +
-  labs(title = "Average Across Subjects with Moderate Trait Anxiety", x = "Trial", y = "Accuracy (%)") +
+  labs(title = "Check Answer Average Across Subjects with Moderate Trait Anxiety", x = "Trial", y = "Accuracy (%)") +
   scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
 
 ggplot(avg_across_high_anxiety_df) +
@@ -93,7 +93,7 @@ ggplot(avg_across_high_anxiety_df) +
   geom_line(aes(x = trial, y = neutral, color = "Neutral")) + 
   geom_point(aes(x = trial, y = threat, color = "Threat")) +
   geom_point(aes(x = trial, y = neutral, color = "Neutral")) +
-  labs(title = "Average Across Subjects with High Trait Anxiety", x = "Trial", y = "Accuracy (%)") +
+  labs(title = "Check Answer Average Across Subjects with High Trait Anxiety", x = "Trial", y = "Accuracy (%)") +
   scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
 ```
 

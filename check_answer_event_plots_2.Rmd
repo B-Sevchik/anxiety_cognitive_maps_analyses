@@ -33,15 +33,16 @@ check_answer_percent_summary <- check_answer_percent_plot_df %>%
 check_answer_percent_summary
 ```
 
-```{r data manipulation & plot, check answer plot}
+```{r data manipulation & plot, Check Answer Plot_2 1}
 ggplot(data = check_answer_percent_summary, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1)
+  geom_jitter(width=0.1) +
+  labs(fill = "Threat Status", x = "Threat Status", y = "Percentage")
 ```
 
 #include STAI
 
-```{r data manipulation, check answer plot}
+```{r data manipulation, Check Answer Plot_2 1 Anxiety}
 check_answer_percent_summary
 df_pilot1_STAI_simple
 
@@ -49,7 +50,7 @@ df_pilot1_STAI_simple
 check_answer_percent_summary_STAI <- merge(df_pilot1_STAI_simple, check_answer_percent_summary, by = "subject")
 check_answer_percent_summary_STAI
 ```
-```{r data manipulation & plot, check answer plot}
+```{r data manipulation & plot, Check Answer Plot_2 1 Anxiety}
 
 #high anxiety data frame, check answer 2 first plot
 high_anxiety_check_answer_summary <- check_answer_percent_summary_STAI %>%
@@ -67,31 +68,31 @@ low_anxiety_check_answer_summary <- check_answer_percent_summary_STAI %>%
 low_anxiety_check_answer_summary
 
 ```
-```{r data manipulation & plot, check answer plot}
+```{r data manipulation & plot, Check Answer Plot_2 1 Anxiety}
 #high anxiety plot, check answer 2 plot1
 ggplot(data = high_anxiety_check_answer_summary, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1) +
-  labs(title = "Plot 1 Check Answer 2, High Anxiety")
+  labs(title = "Plot 1 Check Answer 2, High Anxiety", fill = "Threat Status", x = "Threat Status", y = "Percentage")
 
 #moderate anxiety plot, check answer 2 plot1
 ggplot(data = moderate_anxiety_check_answer_summary, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1) +
-  labs(title = "Plot 1 Check Answer 2, Moderate Anxiety")
+  labs(title = "Plot 1 Check Answer 2, Moderate Anxiety", fill = "Threat Status", x = "Threat Status", y = "Percentage")
 
 #low anxiety plot, check answer 2 plot1
 ggplot(data = low_anxiety_check_answer_summary, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1) +
-  labs(title = "Plot1 Check Answer 2, Low Anxiety")
+  labs(title = "Plot1 Check Answer 2, Low Anxiety", fill = "Threat Status", x = "Threat Status", y = "Percentage")
 ```
 
 
 
 #separate plot, just filtering the first trial
 
-```{r data manipulation, check answer plot}
+```{r data manipulation, Check Answer Plot_2 2}
 check_answer_percent_first_df_trial1
 
 #manipulate the data frame
@@ -115,11 +116,11 @@ check_answer_percent_summary_trial1
 
 
 
-```{r ooo_plot overall, echo=FALSE}
+```{r Check Answer Plot_2 2, echo=FALSE}
 #this is the plot for JUST looking at the first trial. Across subjects, decide which
 ggplot(data = check_answer_percent_summary_trial1, mapping = aes(x = threat_status, y = percentage)) +
   geom_bar(stat = "identity", fill = "steelblue") +
-  labs(x = "Threat Status", y = "Percentage") +
+  labs(x = "Threat Status", y = "Percentage", title = "% of Subjects that got Threat or Neutral Images correct first on the first trial") +
   scale_x_discrete(labels = c("threat", "neutral", "equal")) 
 ```
 
@@ -127,7 +128,7 @@ ggplot(data = check_answer_percent_summary_trial1, mapping = aes(x = threat_stat
 ##including STAI scores
 
 
-```{r data manipulation, check answer plot}
+```{r data manipulation, Check Answer Plot_2 2 Anxiety}
 
 #initialize empty list
 check_answer_percent_summary_list <- list()
@@ -166,26 +167,26 @@ check_answer_percent_summary_high
 
 ```
 
-```{r ooo_plot overall, echo=FALSE}
+```{r Check Answer Plot_2 2 Anxiety, echo=FALSE}
 #these are the plots for JUST looking at the first trial
 
 #low anxiety
 ggplot(data = check_answer_percent_summary_low, mapping = aes(x = threat_status, y = percentage)) +
   geom_bar(stat = "identity", fill = "steelblue") +
-  labs(x = "Threat Status", y = "Percentage", title = "Low Anxiety") +
+  labs(x = "Threat Status", y = "Percentage", title = " % of Low Anxiety Subjects that got Threat or Neutral Images correct first on trial 1") +
   scale_x_discrete(labels = c("threat", "neutral", "equal")) 
 
 
 #moderate anxiety
 ggplot(data = check_answer_percent_summary_moderate, mapping = aes(x = threat_status, y = percentage)) +
   geom_bar(stat = "identity", fill = "steelblue") +
-  labs(x = "Threat Status", y = "Percentage", title = "Moderate Anxiety") +
+  labs(x = "Threat Status", y = "Percentage", title = "% of Moderate Anxiety subjects that got threat or neutral images correct first on trial 1") +
   scale_x_discrete(labels = c("threat", "neutral", "equal")) 
 
 #high anxiety
 ggplot(data = check_answer_percent_summary_high, mapping = aes(x = threat_status, y = percentage)) +
   geom_bar(stat = "identity", fill = "steelblue") +
-  labs(x = "Threat Status", y = "Percentage", title = "High Anxiety") +
+  labs(x = "Threat Status", y = "Percentage", title = "% of High Anxiety subjects that got threat or neutral images correct first on trial 1") +
   scale_x_discrete(labels = c("threat", "neutral", "equal")) 
 
 ```

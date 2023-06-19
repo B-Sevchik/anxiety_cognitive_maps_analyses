@@ -42,7 +42,8 @@ ggplot(data = percentage_drop_plot_df, mapping = aes(x = threat_status, y = perc
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1) +
   geom_hline(yintercept = 40, linetype = "dotted", color = "blue") +
-  geom_hline(yintercept = 60, linetype = "dotted", color = "red")
+  geom_hline(yintercept = 60, linetype = "dotted", color = "red")+
+  labs(fill = "Threat Status", x = "Threat Status", y = "Percentage", title = "% that Subject Selected Threat vs. Neutral Images on Their First Drag and Drop")
 #change labels at some point to reflect that here, "threat_status" refers to which type of image the participant selected first to drag & drop, and "percentage" refers to the percent, for each subject, that out of how many trials it took them to complete the task, on the first attempt the first image they chose to drag & drop was a threat versus a neutral image
 #added the dotted lines here to indicate percent if it was by chance - so 60% for neutral (red dotted line), 40% for threat (blue dotted line)
 ```
@@ -53,7 +54,8 @@ ggplot(data = percentage_drop_plot_acc_df, mapping = aes(x = threat_status, y = 
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1) +
   geom_hline(yintercept = 40, linetype = "dotted", color = "blue") +
-  geom_hline(yintercept = 60, linetype = "dotted", color = "red")
+  geom_hline(yintercept = 60, linetype = "dotted", color = "red") +
+  labs(fill = "Threat Status", x = "Threat Status", y = "percentage", title = "% Subject Selected Threat vs. Neutral Image on First ACCURATE Drag & Drop")
 #change labels at some point to reflect that here, "threat_status" refers to which type of image the participant selected first to drag & drop, and "percentage" refers to the percent, for each subject, that out of how many trials it took them to complete the task, on the first attempt the first image they chose to drag & drop was a threat versus a neutral image
 #added the dotted lines here to indicate percent if it was by chance - so 60% for neutral (red dotted line), 40% for threat (blue dotted line)
 ```

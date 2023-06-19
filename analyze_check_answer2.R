@@ -55,6 +55,7 @@ check_answer_df_2
 #make a list of separate data frames in a list for each subject
 #unique subjects
 unique_subjects <- unique(check_answer_df_2$subject)
+unique_subjects
 
 check_answer_df_list <- list()
 
