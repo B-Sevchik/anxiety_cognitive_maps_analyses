@@ -8,7 +8,7 @@ import glob
 import pandas as pd
 
 #grab all the files in the given folder that have data
-path = '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot1/'
+path = '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot2/'
 #r"/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/TestingData2"
 #"C:\\Users\\rmg55\\Box\\Data\\SF_Sequence2\\"
 allFiles = glob.glob(path + "*.txt")

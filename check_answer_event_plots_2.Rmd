@@ -19,11 +19,13 @@ check_answer_percent_plot_df <- check_answer_percent_first_df %>%
   pivot_longer(cols = c(percent_threat, percent_neutral, percent_equal),
                names_to = "threat_status",
                values_to = "percentage")
+check_answer_percent_plot_df
 
 #rename threat status values such that they no longer are called percent_
 check_answer_percent_plot_df$threat_status <- factor(check_answer_percent_plot_df$threat_status,
                                                  levels = c("percent_threat", "percent_neutral", "percent_equal"),
                                                  labels = c("threat", "neutral", "equal"))
+check_answer_percent_plot_df
 
 #group by subject and threat_status, summarize the percentage
 check_answer_percent_summary <- check_answer_percent_plot_df %>%
