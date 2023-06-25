@@ -2,7 +2,7 @@ library(tidyverse)
 library(psycho)
 
 #path reference
-data_path <- '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot2/combinedData_Anxiety_Cognitive_Maps.csv' 
+data_path <- '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot3/combinedData_Anxiety_Cognitive_Maps.csv' 
 
 #load data
 df <- read_csv(data_path)
@@ -53,6 +53,14 @@ percentage_drop_threat_acc_df <- drop_combined_trials_acc_df %>%
   )
 percentage_drop_threat_acc_df
 
+#manipulate structure of data frame
+percentage_drop_plot_df <- percentage_drop_threat_df %>%
+  pivot_longer(cols = starts_with("percentage_"),
+               names_to = "threat_status",
+               values_to = "percentage") %>%
+  mutate(threat_status = gsub("percentage_", "", threat_status))
+percentage_drop_plot_df
+
 
 #INCLUDE STAI SCORES
 
@@ -79,6 +87,15 @@ percentage_drop_plot_low_anxiety <- percentage_drop_plot_anxiety_df %>%
 percentage_drop_plot_low_anxiety
 
 
+percentage_drop_threat_acc_df
+
+#manipulate structure of data frame
+percentage_drop_plot_acc_df <- percentage_drop_threat_acc_df %>%
+  pivot_longer(cols = starts_with("percentage_"),
+               names_to = "threat_status",
+               values_to = "percentage") %>%
+  mutate(threat_status = gsub("percentage_", "", threat_status))
+percentage_drop_plot_acc_df
 
 #STAI scores - including accuracy
 percentage_drop_plot_acc_df

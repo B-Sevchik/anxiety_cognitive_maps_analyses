@@ -12,25 +12,9 @@ library(ggplot2)
 ```
 
 ```{r data manipulation, drop event plot}
-percentage_drop_threat_df
-
-#manipulate structure of data frame
-percentage_drop_plot_df <- percentage_drop_threat_df %>%
-  pivot_longer(cols = starts_with("percentage_"),
-               names_to = "threat_status",
-               values_to = "percentage") %>%
-  mutate(threat_status = gsub("percentage_", "", threat_status))
 percentage_drop_plot_df
 ```
 ```{r data manipulation, drop event plot including accuracy requirement}
-percentage_drop_threat_acc_df
-
-#manipulate structure of data frame
-percentage_drop_plot_acc_df <- percentage_drop_threat_acc_df %>%
-  pivot_longer(cols = starts_with("percentage_"),
-               names_to = "threat_status",
-               values_to = "percentage") %>%
-  mutate(threat_status = gsub("percentage_", "", threat_status))
 percentage_drop_plot_acc_df
 ```
 

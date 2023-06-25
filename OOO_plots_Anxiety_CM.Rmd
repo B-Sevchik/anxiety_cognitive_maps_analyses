@@ -106,12 +106,16 @@ ggplot(data = high_anxiety_threat_df, mapping = aes(x = chosenThreatStatus, y = 
   ggtitle("High Trait Anxiety, Odd One Out Inaccurate Choices") +
   labs (x = "Chosen Threat Status", y = "Percentage")
 
+#fixing some error that pops up with moderate anxiety "must request at least one colour from a hue palette"
+my_palette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
 #moderate anxiety
 ggplot(data = moderate_anxiety_threat_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1) +
   ggtitle('Moderate Trait Anxiety, Odd One Out Inaccurate Choices') +
-  labs(x = "Chosen Threat Status", y = "Percentage")
+  labs(x = "Chosen Threat Status", y = "Percentage") +
+  scale_fill_manual(values = my_palette)
 
 #low anxiety
 ggplot(data = low_anxiety_threat_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +

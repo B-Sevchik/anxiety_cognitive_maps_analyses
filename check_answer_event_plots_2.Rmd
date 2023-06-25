@@ -52,7 +52,7 @@ df_pilot1_STAI_simple
 check_answer_percent_summary_STAI <- merge(df_pilot1_STAI_simple, check_answer_percent_summary, by = "subject")
 check_answer_percent_summary_STAI
 ```
-```{r data manipulation & plot, Check Answer Plot_2 1 Anxiety}
+```{r data manipulation & plot, Check Answer Plot_2 1 Anxiety 2}
 
 #high anxiety data frame, check answer 2 first plot
 high_anxiety_check_answer_summary <- check_answer_percent_summary_STAI %>%
@@ -70,7 +70,7 @@ low_anxiety_check_answer_summary <- check_answer_percent_summary_STAI %>%
 low_anxiety_check_answer_summary
 
 ```
-```{r data manipulation & plot, Check Answer Plot_2 1 Anxiety}
+```{r data manipulation & plot, Check Answer Plot_2 1 Anxiety 3}
 #high anxiety plot, check answer 2 plot1
 ggplot(data = high_anxiety_check_answer_summary, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
   geom_boxplot(alpha = 0.5) +
@@ -130,7 +130,7 @@ ggplot(data = check_answer_percent_summary_trial1, mapping = aes(x = threat_stat
 ##including STAI scores
 
 
-```{r data manipulation, Check Answer Plot_2 2 Anxiety}
+```{r data manipulation, Check Answer Plot_2 2 Anxiety 3}
 
 #initialize empty list
 check_answer_percent_summary_list <- list()
