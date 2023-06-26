@@ -1,0 +1,81 @@
+---
+title: "OOO_plots_NEW"
+author: "Brooke Sevchik"
+date: "6/26/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+```
+
+
+##NEW PLOTS
+
+#across subject plot, comparing trials where all 3 options were threat vs. all 3 options were neutral
+
+```{r OOO Plot 1.1, echo=FALSE}
+ggplot(data = all_same_ooo_mean_acc_df, mapping = aes(x = all_threat_status, y = mean_acc)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(x = "all_threat_status", y = "Mean Accuracy (%)", title = "% Accuracy Depending on if all 3 images were threat or neutral") +
+  scale_x_discrete(labels = c("all_threat", "all_neutral")) 
+```
+
+#by subject plot, comparing trials where all 3 options were threat vs. all 3 options were neutral
+```{r OOO Plot 1.2, echo=FALSE}
+ggplot(data = all_same_ooo_acc_df, mapping = aes(x = all_threat_status, y = percentage_acc_1, fill = all_threat_status)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  labs(title = "% Each Subject Was Accurate Depending on if all 3 images were threat or neutral", x = "all_threat_status", y = "Mean Accuracy (%)")
+```
+
+
+
+
+#PLOTS WITH STAI SCORES ADDED
+
+```{r data manipulation, OOO Plot 1.2 Anxiety}
+#by subject, version where if all 3 images were threat vs. neutral, anxiety included
+#high anxiety data frame, ooo first plot
+high_anxiety_threat_df <- ooo_anxiety_new_df %>%
+  filter(anxiety_level == 'high trait anxiety')
+high_anxiety_threat_df
+
+#moderate anxiety data frame, ooo first plot
+moderate_anxiety_threat_df <- ooo_anxiety_new_df %>%
+  filter(anxiety_level == 'moderate trait anxiety')
+moderate_anxiety_threat_df
+
+#high anxiety data frame, ooo first plot
+low_anxiety_threat_df <- ooo_anxiety_new_df %>%
+  filter(anxiety_level == 'low trait anxiety')
+low_anxiety_threat_df
+```
+
+```{r ooo_plot, OOO Plot 1.2 Anxiety, echo=FALSE}
+#by subject, version where if all 3 images were threat vs. neutral, anxiety included
+#high anxiety
+ggplot(data = high_anxiety_threat_df, mapping = aes(x = all_threat_status, y = percentage_acc_1, fill = all_threat_status)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  labs(title = "High anxiety, % Each Subject Was Accurate Depending on if all 3 images were threat or neutral", x = "all_threat_status", y = "Mean Accuracy (%)")
+
+#fixing some error that pops up with moderate anxiety "must request at least one colour from a hue palette"
+my_palette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+#moderate anxiety
+ggplot(data = moderate_anxiety_threat_df, mapping = aes(x = all_threat_status, y = percentage_acc_1, fill = all_threat_status)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  labs(title = "Moderate anxiety, % Each Subject Was Accurate Depending on if all 3 images were threat or neutral", x = "all_threat_status", y = "Mean Accuracy (%)")
+
+#low anxiety
+ggplot(data = low_anxiety_threat_df, mapping = aes(x = all_threat_status, y = percentage_acc_1, fill = all_threat_status)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width=0.1) +
+  labs(title = "Low anxiety, % Each Subject Was Accurate Depending on if all 3 images were threat or neutral", x = "all_threat_status", y = "Mean Accuracy (%)")
+```
+
+
