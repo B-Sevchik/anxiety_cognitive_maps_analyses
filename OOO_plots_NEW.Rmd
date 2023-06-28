@@ -19,8 +19,8 @@ library(ggplot2)
 ```{r OOO Plot 1.1, echo=FALSE}
 ggplot(data = all_same_ooo_mean_acc_df, mapping = aes(x = all_threat_status, y = mean_acc)) +
   geom_bar(stat = "identity", fill = "steelblue") +
-  labs(x = "all_threat_status", y = "Mean Accuracy (%)", title = "% Accuracy Depending on if all 3 images were threat or neutral") +
-  scale_x_discrete(labels = c("all_threat", "all_neutral")) 
+  labs(x = "Threat Status", y = "Mean Accuracy (%)", title = "% Accuracy By Threat Status of All 3 Images Displayed") +
+  scale_x_discrete(labels = c("all threat images", "all neutral images")) 
 ```
 
 #by subject plot, comparing trials where all 3 options were threat vs. all 3 options were neutral
@@ -28,7 +28,8 @@ ggplot(data = all_same_ooo_mean_acc_df, mapping = aes(x = all_threat_status, y =
 ggplot(data = all_same_ooo_acc_df, mapping = aes(x = all_threat_status, y = percentage_acc_1, fill = all_threat_status)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1) +
-  labs(title = "% Each Subject Was Accurate Depending on if all 3 images were threat or neutral", x = "all_threat_status", y = "Mean Accuracy (%)")
+  labs(title = "Subject Accuracy (%) Depending on Threat Status of All 3 Images", x = "Threat Status", y = "Mean Accuracy (%)")+
+  scale_x_discrete(labels = c("all threat images", "all neutral images")) 
 ```
 
 
@@ -60,7 +61,7 @@ low_anxiety_threat_df
 ggplot(data = high_anxiety_threat_df, mapping = aes(x = all_threat_status, y = percentage_acc_1, fill = all_threat_status)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1) +
-  labs(title = "High anxiety, % Each Subject Was Accurate Depending on if all 3 images were threat or neutral", x = "all_threat_status", y = "Mean Accuracy (%)")
+  labs(title = "High anxiety, Subject Accuracy (%) Depending on Threat Status of All 3 Images", x = "all_threat_status", y = "Mean Accuracy (%)")
 
 #fixing some error that pops up with moderate anxiety "must request at least one colour from a hue palette"
 my_palette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -69,13 +70,13 @@ my_palette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00"
 ggplot(data = moderate_anxiety_threat_df, mapping = aes(x = all_threat_status, y = percentage_acc_1, fill = all_threat_status)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1) +
-  labs(title = "Moderate anxiety, % Each Subject Was Accurate Depending on if all 3 images were threat or neutral", x = "all_threat_status", y = "Mean Accuracy (%)")
+  labs(title = "Moderate anxiety, Subject Accuracy (%) Depending on Threat Status of All 3 Images", x = "all_threat_status", y = "Mean Accuracy (%)")
 
 #low anxiety
 ggplot(data = low_anxiety_threat_df, mapping = aes(x = all_threat_status, y = percentage_acc_1, fill = all_threat_status)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1) +
-  labs(title = "Low anxiety, % Each Subject Was Accurate Depending on if all 3 images were threat or neutral", x = "all_threat_status", y = "Mean Accuracy (%)")
+  labs(title = "Low anxiety, Subject Accuracy (%) Depending on Threat Status of All 3 Images", x = "all_threat_status", y = "Mean Accuracy (%)")
 ```
 
 

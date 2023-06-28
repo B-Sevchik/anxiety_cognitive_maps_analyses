@@ -101,7 +101,35 @@ ggplot(avg_across_high_anxiety_df) +
 
 
 
+#check answer plot 1 & 2 combined
 
+```{r plot, Check Answer Plot 2 (Across Subjects)}
 
+#WORK IN PROGRESS
+# Set the transparency level for the second plot
+transparency <- 0.3
+
+# Create the first plot (thin and transparent line)
+for (subject in unique_subjects) {
+  subject_df <- avg_check_answer_acc_df_list[[subject]]
+  plot <- ggplot(subject_df) +
+    geom_line(aes(x = trialCount, y = threat, color = "Threat"), size = 0.8, alpha = transparency) +
+    geom_line(aes(x = trialCount, y = neutral, color = "Neutral"), size = 0.8, alpha = transparency) +
+    geom_point(aes(x = trialCount, y = threat, color = "Threat")) +
+    geom_point(aes(x = trialCount, y = neutral, color = "Neutral")) +
+    labs(title = paste("Subject:", subject), x = "Trial", y = "Accuracy (%)") +
+    scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
+  print(plot)
+}
+
+# Add the second plot in the background
+ggplot(average_across_df) +
+  geom_line(aes(x = trial, y = threat, color = "Threat")) +
+  geom_line(aes(x = trial, y = neutral, color = "Neutral")) + 
+  geom_point(aes(x = trial, y = threat, color = "Threat")) +
+  geom_point(aes(x = trial, y = neutral, color = "Neutral")) +
+  labs(title = "Average Across Subjects", x = "Trial", y = "Accuracy (%)") +
+  scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
+```
 
 
