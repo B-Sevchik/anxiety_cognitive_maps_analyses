@@ -38,7 +38,7 @@ check_answer_percent_summary
 ```{r data manipulation & plot, Check Answer Plot_2 1}
 ggplot(data = check_answer_percent_summary, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   labs(fill = "Threat Status", x = "Threat Status", y = "Percentage")
 ```
 
@@ -74,19 +74,19 @@ low_anxiety_check_answer_summary
 #high anxiety plot, check answer 2 plot1
 ggplot(data = high_anxiety_check_answer_summary, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   labs(title = "Plot 1 Check Answer 2, High Anxiety", fill = "Threat Status", x = "Threat Status", y = "Percentage")
 
 #moderate anxiety plot, check answer 2 plot1
 ggplot(data = moderate_anxiety_check_answer_summary, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   labs(title = "Plot 1 Check Answer 2, Moderate Anxiety", fill = "Threat Status", x = "Threat Status", y = "Percentage")
 
 #low anxiety plot, check answer 2 plot1
 ggplot(data = low_anxiety_check_answer_summary, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   labs(title = "Plot1 Check Answer 2, Low Anxiety", fill = "Threat Status", x = "Threat Status", y = "Percentage")
 ```
 

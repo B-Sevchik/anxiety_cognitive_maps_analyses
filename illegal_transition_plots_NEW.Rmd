@@ -22,7 +22,7 @@ subject_dprime_df
 ```{r Illegal Transition Plot 1.1, echo=FALSE}
 ggplot(subject_dprime_df, aes(x = transitionThreatKind, y = dprime, fill=transitionThreatKind)) +
   geom_boxplot(alpha=0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   labs(title = "D Prime by Transition Type in Illegal Transition Task", x = "Transition Type", y = "D Prime Score",
        fill = "Transition Type") +
   scale_fill_manual(values = c("threat-threat" = "red", "threat-neutral" = "blue", "neutral-threat" = "green", "neutral-neutral" = "orange"),
@@ -67,7 +67,7 @@ low_anxiety_illegal_df
 #high trait anxiety
 ggplot(high_anxiety_illegal_df, aes(x = transitionThreatKind, y = dprime, fill=transitionThreatKind)) +
   geom_boxplot(alpha=0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   ggtitle("High Trait Anxiety, D Prime by Transition Type") +
   labs(x = "Transition Type", y = "D Prime Score",
        fill = "Transition Type") +
@@ -77,7 +77,7 @@ ggplot(high_anxiety_illegal_df, aes(x = transitionThreatKind, y = dprime, fill=t
 #moderate trait anxiety
 ggplot(moderate_anxiety_illegal_df, aes(x = transitionThreatKind, y = dprime, fill=transitionThreatKind)) +
   geom_boxplot(alpha=0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   ggtitle('Moderate Trait Anxiety, D Prime by Transition Type') +
   labs(x = "Transition Type", y = "D Prime Score",
        fill = "Transition Type") +
@@ -87,7 +87,7 @@ ggplot(moderate_anxiety_illegal_df, aes(x = transitionThreatKind, y = dprime, fi
 #low trait anxiety
 ggplot(low_anxiety_illegal_df, aes(x = transitionThreatKind, y = dprime, fill=transitionThreatKind)) +
   geom_boxplot(alpha=0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   ggtitle('Low Trait Anxiety, D Prime by Transition Type') +
   labs(x = "Transition Type", y = "D Prime Score",
        fill = "Transition Type") +

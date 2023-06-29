@@ -46,7 +46,7 @@ threat_percent_subjects_df
 ```{r OOO Plot 1.2, echo=FALSE}
 ggplot(data = threat_percent_subjects_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   labs(title = "% Each Subject Chose Threat vs. Neutral Inaccurate Images in Odd One Out Task", x = "Chosen Threat Status", y = "Percentage")
 ```
 
@@ -66,7 +66,7 @@ subject_acc_ooo_df
 ```{r OOO Plot 2.1, echo=FALSE}
 ggplot(subject_acc_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
   geom_boxplot(alpha=0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1 ,height = 0.0) +
   labs(title = "Mean Accuracy by Subject in Odd One Out Task by Chosen Threat Status", x = "Chosen Threat Status", y = "Mean Accuracy")
 ```
 
@@ -102,7 +102,7 @@ low_anxiety_threat_df
 #high anxiety
 ggplot(data = high_anxiety_threat_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   ggtitle("High Trait Anxiety, Odd One Out Inaccurate Choices") +
   labs (x = "Chosen Threat Status", y = "Percentage")
 
@@ -112,7 +112,7 @@ my_palette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00"
 #moderate anxiety
 ggplot(data = moderate_anxiety_threat_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   ggtitle('Moderate Trait Anxiety, Odd One Out Inaccurate Choices') +
   labs(x = "Chosen Threat Status", y = "Percentage") +
   scale_fill_manual(values = my_palette)
@@ -120,7 +120,7 @@ ggplot(data = moderate_anxiety_threat_df, mapping = aes(x = chosenThreatStatus, 
 #low anxiety
 ggplot(data = low_anxiety_threat_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   ggtitle ('Low Trait Anxiety, Odd One Out Inaccurate Choices') +
   labs(x = "Chosen Threat Status", y = "Percentage")
 ```
@@ -157,19 +157,19 @@ low_anxiety_ooo_df
 ```{r OOO Plot 2.1 Anxiety, echo=FALSE}
 ggplot(high_anxiety_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
   geom_boxplot(alpha=0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   ggtitle('High Trait Anxiety, Mean Accuracy in Odd One Out Task by Chosen Threat Status')+
   labs(x= "Chosen Threat Status", y = "Mean Accuracy")
 
 ggplot(moderate_anxiety_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
   geom_boxplot(alpha=0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   ggtitle('Moderate Trait Anxiety, Mean Accuracy in Odd One Out Task by Chosen Threat Status')+
   labs (x = "Chosen Threat Status", y = "Mean Accuracy")
 
 ggplot(low_anxiety_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
   geom_boxplot(alpha=0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   ggtitle('Low Trait Anxiety, Mean Accuracy in Odd One Out Task by Chosen Threat Status') +
   labs (x = "Chosen Threat Status", y = "Mean Accuracy")
 ```
