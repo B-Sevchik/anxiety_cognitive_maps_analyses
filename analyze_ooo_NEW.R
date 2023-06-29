@@ -25,7 +25,7 @@ all_same_threat_ooo_df
 #compare accuracies of all_threat vs. all_neutral
 all_same_ooo_acc_df <- all_same_threat_ooo_df %>%
   group_by(subject, all_threat_status) %>%
-  summarise(percentage_acc_1 = sum(acc == 1) / n() * 100)
+  summarise(percentage_acc_1 = sum(acc == 1) / sum(all_threat_status %in% c('all_threat', 'all_neutral')) * 100)
 all_same_ooo_acc_df
 
 #across subjects plot comparing accuracy

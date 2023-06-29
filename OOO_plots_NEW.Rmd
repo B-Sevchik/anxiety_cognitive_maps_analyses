@@ -27,7 +27,7 @@ ggplot(data = all_same_ooo_mean_acc_df, mapping = aes(x = all_threat_status, y =
 ```{r OOO Plot 1.2, echo=FALSE}
 ggplot(data = all_same_ooo_acc_df, mapping = aes(x = all_threat_status, y = percentage_acc_1, fill = all_threat_status)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   labs(title = "Subject Accuracy (%) Depending on Threat Status of All 3 Images", x = "Threat Status", y = "Mean Accuracy (%)")+
   scale_x_discrete(labels = c("all threat images", "all neutral images")) 
 ```
@@ -60,7 +60,7 @@ low_anxiety_threat_df
 #high anxiety
 ggplot(data = high_anxiety_threat_df, mapping = aes(x = all_threat_status, y = percentage_acc_1, fill = all_threat_status)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   labs(title = "High anxiety, Subject Accuracy (%) Depending on Threat Status of All 3 Images", x = "all_threat_status", y = "Mean Accuracy (%)")
 
 #fixing some error that pops up with moderate anxiety "must request at least one colour from a hue palette"
@@ -69,13 +69,13 @@ my_palette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00"
 #moderate anxiety
 ggplot(data = moderate_anxiety_threat_df, mapping = aes(x = all_threat_status, y = percentage_acc_1, fill = all_threat_status)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   labs(title = "Moderate anxiety, Subject Accuracy (%) Depending on Threat Status of All 3 Images", x = "all_threat_status", y = "Mean Accuracy (%)")
 
 #low anxiety
 ggplot(data = low_anxiety_threat_df, mapping = aes(x = all_threat_status, y = percentage_acc_1, fill = all_threat_status)) +
   geom_boxplot(alpha = 0.5) +
-  geom_jitter(width=0.1) +
+  geom_jitter(width=0.1, height = 0.0) +
   labs(title = "Low anxiety, Subject Accuracy (%) Depending on Threat Status of All 3 Images", x = "all_threat_status", y = "Mean Accuracy (%)")
 ```
 
