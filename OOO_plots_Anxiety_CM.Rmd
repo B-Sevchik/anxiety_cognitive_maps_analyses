@@ -99,12 +99,14 @@ low_anxiety_threat_df
 
 ```{r ooo_plot, OOO Plot 1.2 Anxiety, echo=FALSE}
 
+my_palette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 #high anxiety
 ggplot(data = high_anxiety_threat_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = chosenThreatStatus)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1, height = 0.0) +
   ggtitle("High Trait Anxiety, Odd One Out Inaccurate Choices") +
-  labs (x = "Chosen Threat Status", y = "Percentage")
+  labs (x = "Chosen Threat Status", y = "Percentage") +
+  scale_fill_manual(values = my_palette)
 
 #fixing some error that pops up with moderate anxiety "must request at least one colour from a hue palette"
 my_palette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -122,7 +124,8 @@ ggplot(data = low_anxiety_threat_df, mapping = aes(x = chosenThreatStatus, y = p
   geom_boxplot(alpha = 0.5) +
   geom_jitter(width=0.1, height = 0.0) +
   ggtitle ('Low Trait Anxiety, Odd One Out Inaccurate Choices') +
-  labs(x = "Chosen Threat Status", y = "Percentage")
+  labs(x = "Chosen Threat Status", y = "Percentage") +
+  scale_fill_manual(values = my_palette)
 ```
 
 
@@ -155,23 +158,28 @@ low_anxiety_ooo_df
 ```
 
 ```{r OOO Plot 2.1 Anxiety, echo=FALSE}
+my_palette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
 ggplot(high_anxiety_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
   geom_boxplot(alpha=0.5) +
   geom_jitter(width=0.1, height = 0.0) +
   ggtitle('High Trait Anxiety, Mean Accuracy in Odd One Out Task by Chosen Threat Status')+
-  labs(x= "Chosen Threat Status", y = "Mean Accuracy")
+  labs(x= "Chosen Threat Status", y = "Mean Accuracy") +
+  scale_fill_manual(values = my_palette)
 
 ggplot(moderate_anxiety_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
   geom_boxplot(alpha=0.5) +
   geom_jitter(width=0.1, height = 0.0) +
   ggtitle('Moderate Trait Anxiety, Mean Accuracy in Odd One Out Task by Chosen Threat Status')+
-  labs (x = "Chosen Threat Status", y = "Mean Accuracy")
+  labs (x = "Chosen Threat Status", y = "Mean Accuracy") +
+  scale_fill_manual(values = my_palette)
 
 ggplot(low_anxiety_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosenThreatStatus)) +
   geom_boxplot(alpha=0.5) +
   geom_jitter(width=0.1, height = 0.0) +
   ggtitle('Low Trait Anxiety, Mean Accuracy in Odd One Out Task by Chosen Threat Status') +
-  labs (x = "Chosen Threat Status", y = "Mean Accuracy")
+  labs (x = "Chosen Threat Status", y = "Mean Accuracy") +
+  scale_fill_manual(values = my_palette)
 ```
 
 

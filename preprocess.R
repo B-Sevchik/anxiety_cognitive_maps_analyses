@@ -1,7 +1,7 @@
 setwd("~/Documents/GitHub/anxiety_cognitive_maps_analyses")
 
 library(tidyverse)
-df <- read_csv('/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot3/combinedData_Anxiety_Cognitive_Maps.csv')
+df <- read_csv('/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot4/combinedData_Anxiety_Cognitive_Maps.csv')
 
 #analyze drop events
 drop_df <- df %>% 
