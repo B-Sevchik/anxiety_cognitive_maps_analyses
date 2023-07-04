@@ -6,7 +6,7 @@ library(dplyr)
 #BE SURE TO EDIT PATH NAMES EACH TIME YOU RUN SCRIPT
 
 #path references
-data_path <- '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot4/STAIscores.csv' #EDIT PATH NAME EACH TIME
+data_path <- '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot5/STAIscores.csv' #EDIT PATH NAME EACH TIME
 
 #load data
 df_pilot1 <- read_csv(data_path)
@@ -64,14 +64,14 @@ df_pilot1 <- df_pilot1 %>%
 df_pilot1_STAI <- df_pilot1 %>%
   group_by(subjectID) %>%
   mutate(anxiety_level = case_when(
-    sumVals < 37 ~ 'low trait anxiety',
+    sumVals <= 37 ~ 'low trait anxiety',
     sumVals >= 38 & sumVals < 44 ~ 'moderate trait anxiety',
-    sumVals > 44 ~ 'high trait anxiety'
+    sumVals >= 44 ~ 'high trait anxiety'
   ))
 df_pilot1_STAI
 
 #save out the file
-write.csv(df_pilot1_STAI, '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot4/STAI_scores_calculated.csv') #EDIT PATH NAME EACH TIME
+write.csv(df_pilot1_STAI, '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot5/STAI_scores_calculated.csv') #EDIT PATH NAME EACH TIME
 
 
 
