@@ -4,7 +4,7 @@ library(psycho)
 #SAME PLOT AS BEFORE, BUT GROUPING BASED ON EACH KIND OF THREAT TRANSITION (THREAT-NEUTRAL, NEUTRAL-NEUTRAL, ETC., INSTEAD OF BASED ON IF IT CONTAINS THREAT VS. NO IN A BINARY)
 
 #path reference
-data_path <- '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot5/combinedData_Anxiety_Cognitive_Maps.csv' 
+data_path <- '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot6/combinedData_Anxiety_Cognitive_Maps.csv' 
 
 #load data
 df <- read_csv(data_path)
@@ -42,7 +42,7 @@ dprime_df
 
 #include STAI scores in ooo analyses
 
-df_STAI_illegal <- read_csv('/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot5/STAI_scores_calculated.csv')
+df_STAI_illegal <- read_csv('/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot6/STAI_scores_calculated.csv')
 df_STAI_illegal
 
 df_pilot1_STAI_simple <- df_STAI_illegal %>%
