@@ -1,0 +1,74 @@
+---
+title: "check_answer_event_plots_NEW"
+author: "Brooke Sevchik"
+date: "7/10/2023"
+output: html_document
+---
+#run this after check_answer_event_plots!
+
+
+#individual subject plots
+```{r data manipulation & plot, Check Answer Plot 1}
+#iterate through data frame for each subject
+for (subject in unique_subjects) {
+  #get data frame for current subject
+  subject_df <- avg_check_answer_acc_df_list[[subject]]
+  #make the plot for current subject
+   plot <- ggplot(subject_df) +
+    geom_line(aes(x = trialCount, y = threat, color = "Threat")) +
+    geom_line(aes(x = trialCount, y = neutral, color = "Neutral")) +
+    geom_point(aes(x = trialCount, y = threat, color = "Threat")) +
+    geom_point(aes(x = trialCount, y = neutral, color = "Neutral")) +
+    labs(title = paste("Subject:", subject), x = "Trial", y = "Accuracy (%)") +
+    scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
+  #print plot for subject
+  print(plot)
+}
+```
+
+
+#across subjects plot
+```{r plot, Check Answer Plot 2 (Across Subjects)}
+ggplot(average_across_df) +
+  geom_line(aes(x = trial, y = threat, color = "Threat")) +
+  geom_line(aes(x = trial, y = neutral, color = "Neutral")) + 
+  geom_point(aes(x = trial, y = threat, color = "Threat")) +
+  geom_point(aes(x = trial, y = neutral, color = "Neutral")) +
+  labs(title = "Average Across Subjects", x = "Trial", y = "Accuracy (%)") +
+  scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
+```
+
+```{r plot, Check Answer Plot 2 (Across Subjects)}
+
+#plot for average across subjects
+plot_avg <- ggplot(average_across_df) +
+  geom_line(aes(x = trial, y = threat), color = "red", size = 3) +
+  geom_line(aes(x = trial, y = neutral), color = "blue", size = 3) +
+  geom_point(aes(x = trial, y = threat), color = "red", size = 4) +
+  geom_point(aes(x = trial, y = neutral), color = "blue", size = 4) +
+  labs(title = "Average Across Subjects", x = "Trial", y = "Accuracy (%)")
+
+#iterate through each subjects data frame, and semi-transparent thin lines to the plot_avg
+for (subject in unique_subjects) {
+  #df for current subject
+  subject_df <- avg_check_answer_acc_df_list[[subject]]
+  
+  #add a line to the plot for that current subject (and make the line semi-transparent)
+  plot_avg <- plot_avg +
+    geom_line(data = subject_df, aes(x = trialCount, y = threat), color = "red", alpha = 0.3) +
+    geom_line(data = subject_df, aes(x = trialCount, y = neutral), color = "blue", alpha = 0.3)
+}
+plot_avg
+
+
+
+```
+
+
+
+
+
+
+
+
+
