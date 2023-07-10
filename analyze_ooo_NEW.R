@@ -1,7 +1,7 @@
 library(tidyverse)
 
 #path reference
-data_path <- '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot6/combinedData_Anxiety_Cognitive_Maps.csv' 
+data_path <- '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot9/combinedData_Anxiety_Cognitive_Maps.csv' 
 
 #load data
 df <- read_csv(data_path)
@@ -37,7 +37,7 @@ all_same_ooo_mean_acc_df
 ###
 #include STAI scores in ooo analyses
 
-df_STAI_ooo <- read_csv('/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot6/STAI_scores_calculated.csv')
+df_STAI_ooo <- read_csv('/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot9/STAI_scores_calculated.csv')
 df_STAI_ooo
 
 df_pilot1_STAI_simple <- df_STAI_ooo %>%
