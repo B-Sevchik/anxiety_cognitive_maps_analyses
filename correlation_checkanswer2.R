@@ -2,7 +2,7 @@ library(tidyverse)
 library(dplyr)
 
 #BASIC MANIPULATION
-STAI_correlation_df <- read_csv('/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/All participants/STAI_scores_calculated.csv')
+STAI_correlation_df <- read_csv('/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/all_participants/STAI_scores_calculated.csv')
 
 # Create just the STAI score, subject, and anxiety level
 STAI_correlation_df <- STAI_correlation_df %>%

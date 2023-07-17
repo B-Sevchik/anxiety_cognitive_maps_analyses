@@ -101,7 +101,7 @@ ggplot(avg_across_high_anxiety_df) +
 
 
 
-#check answer plot 1 & 2 combined
+#check answer plot 1 & 2 combined - note that this is not what I ended up using, this code doesn't work, see new version of script
 
 ```{r plot, Check Answer Plot 2 (Across Subjects)}
 

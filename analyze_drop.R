@@ -2,7 +2,7 @@ library(tidyverse)
 library(psycho)
 
 #path reference
-data_path <- '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/Pilot9/combinedData_Anxiety_Cognitive_Maps.csv' 
+data_path <- '/Users/brookesevchik/Box/Data/Anxiety_Cognitive_Maps/all_participants/combinedData_Anxiety_Cognitive_Maps.csv' 
 
 #load data
 df <- read_csv(data_path)

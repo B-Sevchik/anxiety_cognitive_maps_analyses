@@ -46,7 +46,7 @@ plot_avg <- ggplot(average_across_df) +
   geom_line(aes(x = trial, y = neutral), color = "blue", size = 3) +
   geom_point(aes(x = trial, y = threat), color = "red", size = 4) +
   geom_point(aes(x = trial, y = neutral), color = "blue", size = 4) +
-  labs(title = "Average Across Subjects", x = "Trial", y = "Accuracy (%)")
+  labs(title = "Average Across Subjects Against Individual Subjects", x = "Trial", y = "Accuracy (%)")
 
 #iterate through each subjects data frame, and semi-transparent thin lines to the plot_avg
 for (subject in unique_subjects) {
