@@ -36,10 +36,11 @@ check_answer_percent_summary
 ```
 
 ```{r data manipulation & plot, Check Answer Plot_2 1}
-ggplot(data = check_answer_percent_summary, mapping = aes(x = threat_status, y = percentage, fill = threat_status)) +
-  geom_boxplot(alpha = 0.5) +
+ggplot(data = check_answer_percent_summary, mapping = aes(x = threat_status, y = percentage, fill = threat_status )) +
+  geom_boxplot(alpha = 0.5, outlier.shape = NA) +
   geom_jitter(width=0.1, height = 0.0) +
-  labs(fill = "Threat Status", x = "Threat Status", y = "Percentage")
+  labs(fill = "Threat Status", x = "Threat Status", y = "Percentage")+
+  theme(legend.position = "none")
 ```
 
 #include STAI
