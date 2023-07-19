@@ -35,7 +35,8 @@ ggplot(data = threat_percent_anxiety_binned_df, mapping = aes(x = anxiety_binned
   #geom_jitter(position = position_jitter(width = 0.05)) +
   geom_point(position = position_jitterdodge(jitter.width = 0.3)) +
   geom_hline(yintercept = 0.5, linetype = "dotted", color = "red")+
-  labs(title = "% Each Subject Chose Threat over Neutral Inaccurate Images in Odd One Out Task", x = "Anxiety Level", y = "Percentage")
+  labs(title = "Percentage of Trials Image Valence Type Incorrectly Chosen", x = " Trait Anxiety Level", y = "Percentage", color = "Anxiety Level")+
+  theme(legend.position = "none")
 
 
 #T-TEST - OVERALL
@@ -95,8 +96,9 @@ STAI_binned_acc_ooo
 ggplot(STAI_binned_acc_ooo, aes(x = chosenThreatStatus, y = mean_acc, fill = anxiety_binned))+
   geom_boxplot(alpha = 0.5, outlier.shape = NA) +
   geom_point(position = position_jitterdodge(jitter.width = 0.1)) +
-  labs(title = "Mean Accuracy by Subject in OOO by CHosen Threat and Anxiety", x = "Chosen Threat Status", y = "Mean Accuracy")
-
+  labs(title = "Mean Accuracy For All Trials", x = "Chosen Threat Status", y = "Mean Accuracy") +
+  scale_fill_manual(name = "Anxiety Level",
+                    values = c("high trait anxiety" = "red", "low to moderate trait anxiety" = "blue"))
 ```
 We investigated, for the trials in which the participant chose incorrectly in the odd one out task, and the other incorrect option of the three was of the opposite valence of the chosen incorrect image, were the participants more likely to chosoe the threat incorrect option or the neutral incorrect option?
 To do so, we compared their percentage/likelihood of picking the threat incorrect option to chance (50%).
@@ -136,7 +138,8 @@ ggplot(dprime_anxiety_binned_df, aes(x = transition_threat, y = dprime, fill = a
   labs(title = "D Prime by Transition Type in Illegal Transition Task", x = "Transition Type", y = "D Prime Score",
        fill = "Transition Type") +
   scale_fill_manual(values = c("high trait anxiety" = "red", "low to moderate trait anxiety" = "blue"),
-                    labels = c("High Trait Anxiety", "Low to Moderate Trait Anxiety"))
+                    labels = c("High Trait Anxiety", "Low to Moderate Trait Anxiety")) +
+  scale_x_discrete(labels = c("contains_threat" = "Involves Threat", "no_threat" = "Does Not Involve Threat"))
 
 
 
@@ -202,7 +205,7 @@ ggplot(check_answer_percent_STAI_binned, aes(x = threat_status, y = percentage, 
   geom_boxplot(alpha=0.5) +
   #geom_jitter(width=0.1) +
   geom_point(position = position_jitterdodge(jitter.width = 0.1)) +
-  labs(title = "Check Answer Graph", x = "Threat Status", y = "Percentage",
+  labs(title = "Percentage of Trials Image Valence Type Learned First", x = "Threat Status", y = "Percentage",
        fill = "Anxiety Level") +
   scale_fill_manual(values = c("high trait anxiety" = "red", "low to moderate trait anxiety" = "blue"),
     labels = c("High Trait Anxiety", "Low to Moderate Trait Anxiety"))
@@ -251,6 +254,9 @@ Which threat type is 100% correct first in the initial learning phase drag and d
 The vast majority of trials for each subject, each person got threat and neutral ianges all correct at the same time, i.e., within the same trial.
 The percentage that they learned all threat images first is significantly larger than the percentage that they learned all neutral images first. This is not modulated by anxiety, and people with high versus low to moderate anxiety generally did not influence the percentage they learned all threat images first before neutral images.
 
+For the vast majority of trials, each person got threat and neutral images all correct within the same trial, and the image valences were learned at "equal" rates.
+For trials in which threat and neutral images were not learned within the same "equal" trial, the percentage of trials each participant learned all threat images first is significantly larger than the percentage they learned all neutral images first.
+Anxiety level had no significant effect on which image valence was learned first. 
 
 
 ```{r data manipulation, OOO Plot 1.2 Anxiety}
@@ -303,12 +309,14 @@ for (subject in unique_subjects) {
 }
 
 # Display the plot_avg
+plot_avg <- plot_avg +
+  labs(colour = "Image Valence", title = "Learning Trajectories for Initial Learning Phase Task")
 plot_avg
 ```
 This plot shows the learning trajectory for the drag and drop task, with indiivdual learning trajectories plotted thinner and semi-transparent, and the average learning trajectory across participants with a thicker, more opaque line. We can see across trials, performance generally improves until they reach 100% and have met the conditions to learn it well enough to exit this task.
 We can see, overall, that the individual learning trajectories differ for learning teh threat images versus the neutral images in some cases...(put this graph first)...is this learning of the threat images versus the neutral images in the structure significantly different?
 
-
+Indiidual learning trajectories differ in the initial learning phase task.
 
 
 
