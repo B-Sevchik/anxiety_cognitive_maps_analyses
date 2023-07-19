@@ -74,6 +74,14 @@ ggplot(subject_acc_ooo_df, aes(x = chosenThreatStatus, y = mean_acc, fill=chosen
 
 ```{r data manipulation, OOO Plot 1.2 Anxiety}
 ooo_anxiety_df
+
+ooo_anxiety_binned_df <- ooo_anxiety_df %>%
+  mutate(anxiety_binned = case_when(
+    anxiety_level == 'low trait anxiety' | anxiety_level == 'moderate trait anxiety' ~ 'low to moderate trait anxiety',
+    anxiety_level == 'high trait anxiety' ~ 'high trait anxiety'
+  ))
+ooo_anxiety_binned_df
+
 threat_percent_anxiety_df <- ooo_anxiety_df  %>%
   group_by(subject, anxiety_level) %>% 
   count(chosenThreatStatus) %>%

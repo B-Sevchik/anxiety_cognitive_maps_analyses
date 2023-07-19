@@ -1,0 +1,304 @@
+---
+title: "Poster Scripts"
+author: "Brooke Sevchik"
+date: "7/17/2023"
+output: html_document
+---
+
+
+```{r data manipulation, OOO Plot 1.2 Anxiety}
+ooo_anxiety_df
+
+ooo_anxiety_binned_df <- ooo_anxiety_df %>%
+  mutate(anxiety_binned = case_when(
+    anxiety_level == 'low trait anxiety' | anxiety_level == 'moderate trait anxiety' ~ 'low to moderate trait anxiety',
+    anxiety_level == 'high trait anxiety' ~ 'high trait anxiety'
+  ))
+ooo_anxiety_binned_df
+
+threat_percent_anxiety_binned_df <- ooo_anxiety_binned_df  %>%
+  group_by(subject) %>% 
+  summarise(n_chose_threat = sum(chosenThreatStatus == 'threat'), n_total = n(), percentage_chose_threat = n_chose_threat/n_total, anxiety_binned = anxiety_binned)
+threat_percent_anxiety_binned_df
+
+#high anxiety data frame, ooo first plot
+high_anxiety_bin_threat_df <- threat_percent_anxiety_binned_df %>%
+  filter(anxiety_binned == 'high trait anxiety')
+high_anxiety_bin_threat_df
+
+#low to moderate anxiety data frame, ooo first plot
+low_moderate_anxiety_bin_threat_df <- threat_percent_anxiety_binned_df %>%
+  filter(anxiety_binned == 'low to moderate trait anxiety')
+low_moderate_anxiety_bin_threat_df
+
+
+
+#GRAPHS
+threat_percent_anxiety_binned_df <- threat_percent_anxiety_binned_df[!is.na(threat_percent_anxiety_binned_df$chosenThreatStatus), ]
+
+ggplot(data = threat_percent_anxiety_binned_df, mapping = aes(x = chosenThreatStatus, y = percentage_chosenThreatStatus, fill = anxiety_binned)) +
+  geom_boxplot(alpha = 0.5, outlier.shape = NA) +
+  #geom_jitter(position = position_jitter(width = 0.05)) +
+  geom_point(position = position_jitterdodge(jitter.width = 0.1)) +
+  labs(title = "% Each Subject Chose Threat vs. Neutral Inaccurate Images in Odd One Out Task", x = "Chosen Threat Status", y = "Percentage")
+
+
+#STATS
+##PAIRED T TEST
+t.test(threat_percent_anxiety_binned_df$percentage_chosenThreatStatus ~ threat_percent_anxiety_binned_df$chosenThreatStatus, mu = 0,
+       alternative = "greater",
+       paired = FALSE,
+       var.equal = FALSE,
+       conf.level = 0.95)
+
+
+##ANOVA TO ADD STAI SCORES IN
+
+# Create a new data frame with the desired groups
+grouped_data <- subset(threat_percent_anxiety_binned_df, 
+                       (chosenThreatStatus == "threat" & 
+                          anxiety_binned %in% c("high trait anxiety", "low to moderate trait anxiety")) |
+                         (chosenThreatStatus == "neutral" & 
+                            anxiety_binned %in% c("high trait anxiety", "low to moderate trait anxiety")))
+
+# Perform ANOVA
+model <- aov(percentage_chosenThreatStatus ~ chosenThreatStatus * anxiety_binned, data = grouped_data)
+
+# Print the ANOVA table
+summary(model)
+
+```
+We investigated, for the trials in which the participant chose incorrectly in the odd one out task, and the other incorrect option of the three was of the opposite valence of the chosen incorrect image, were the participants more likely to choose the threat incorrect option or the neutral incorrect option?
+
+There was no significant difference between the mean percentage that a subject chose a threat over a neutral image in these trials (p = 0.4778 > 0.05, paired t-test).
+There was no significant difference modulated by trait anxiety level in mean percentage that a subject chose a threat over a neutral image in these trials, or significant interaction between trait anxiety level and mean percentage a subject chose a threat over a neutral image.
+
+
+
+
+
+```{r data manipulation, OOO Plot 1.2 Anxiety}
+subject_dprime_anxiety_df <- illegal_anxiety_df %>%
+  select(subject, transition_threat, dprime, anxiety_level)
+subject_dprime_anxiety_df
+
+dprime_anxiety_binned_df <- subject_dprime_anxiety_df %>%
+  mutate(anxiety_binned = case_when(
+    anxiety_level == 'low trait anxiety' | anxiety_level == 'moderate trait anxiety' ~ 'low to moderate trait anxiety',
+    anxiety_level == 'high trait anxiety' ~ 'high trait anxiety'
+  ))
+dprime_anxiety_binned_df
+
+
+#GRAPHS
+ggplot(dprime_anxiety_binned_df, aes(x = transition_threat, y = dprime, fill=anxiety_binned)) +
+  geom_boxplot(alpha=0.5, outlier.shape = NA) +
+  geom_jitter(width=0.1) +
+  labs(title = "D Prime by Transition Type in Illegal Transition Task", x = "Transition Type", y = "D Prime Score",
+       fill = "Transition Type") +
+  scale_fill_manual(values = c("high trait anxiety" = "red", "low to moderate trait anxiety" = "blue"),
+    labels = c("High Trait Anxiety", "Low to Moderate Trait Anxiety"))
+
+##PAIRED T TEST
+dprime_anxiety_binned_df
+
+t.test(dprime_anxiety_binned_df$dprime ~ dprime_anxiety_binned_df$transition_threat, mu = 0,
+       alternative = "greater",
+       paired = TRUE,
+       var.equal = FALSE,
+       conf.level = 0.95)
+
+
+##ANOVA TO ADD STAI SCORES IN
+# Create a new data frame with the desired groups
+grouped_data <- subset(dprime_anxiety_binned_df, 
+                       (transition_threat == "contains_threat" & 
+                          anxiety_binned %in% c("high trait anxiety", "low to moderate trait anxiety")) |
+                         (transition_threat == "no_threat" & 
+                            anxiety_binned %in% c("high trait anxiety", "low to moderate trait anxiety")))
+
+# Perform ANOVA
+model <- aov(dprime ~ transition_threat * anxiety_binned, data = grouped_data)
+
+# Print the ANOVA table
+summary(model)
+```
+There is a significant difference between mean d’ scores for transition involving a threat image versus transitions only involving neutral images (p = 0.0004357 > 0.05, paired t-test).
+
+Participants with high trait anxiety have significantly higher d'scores overall, but this is not modulated by threat versus neutral images, as there is no interaction between whether or not a transition involves a threat image and trait anxiety score.
+
+
+
+```{r data manipulation, OOO Plot 1.2 Anxiety}
+check_answer_percent_summary_STAI
+
+#filter out the last 3 trials of each subject
+check_answer_percent_summary_STAI %>%
+  group_by(subject) %>%
+  mutate(last_trial = )
+
+
+subject_dprime_anxiety_df <- illegal_anxiety_df %>%
+  select(subject, transition_threat, dprime, anxiety_level)
+subject_dprime_anxiety_df
+
+dprime_anxiety_binned_df <- subject_dprime_anxiety_df %>%
+  mutate(anxiety_binned = case_when(
+    anxiety_level == 'low trait anxiety' | anxiety_level == 'moderate trait anxiety' ~ 'low to moderate trait anxiety',
+    anxiety_level == 'high trait anxiety' ~ 'high trait anxiety'
+  ))
+dprime_anxiety_binned_df
+
+
+#GRAPHS
+ggplot(dprime_anxiety_binned_df, aes(x = transition_threat, y = dprime, fill=anxiety_binned)) +
+  geom_boxplot(alpha=0.5) +
+  geom_jitter(width=0.1) +
+  labs(title = "D Prime by Transition Type in Illegal Transition Task", x = "Transition Type", y = "D Prime Score",
+       fill = "Transition Type") +
+  scale_fill_manual(values = c("high trait anxiety" = "red", "low to moderate trait anxiety" = "blue"),
+    labels = c("High Trait Anxiety", "Low to Moderate Trait Anxiety"))
+
+##PAIRED T TEST
+dprime_anxiety_binned_df
+
+t.test(dprime_anxiety_binned_df$dprime ~ dprime_anxiety_binned_df$transition_threat, mu = 0,
+       alternative = "greater",
+       paired = TRUE,
+       var.equal = FALSE,
+       conf.level = 0.95)
+
+
+##ANOVA TO ADD STAI SCORES IN
+# Create a new data frame with the desired groups
+grouped_data <- subset(dprime_anxiety_binned_df, 
+                       (transition_threat == "contains_threat" & 
+                          anxiety_binned %in% c("high trait anxiety", "low to moderate trait anxiety")) |
+                         (transition_threat == "no_threat" & 
+                            anxiety_binned %in% c("high trait anxiety", "low to moderate trait anxiety")))
+
+# Perform ANOVA
+model <- aov(dprime ~ transition_threat * anxiety_binned, data = grouped_data)
+
+# Print the ANOVA table
+summary(model)
+```
+
+
+
+
+
+
+```{r data manipulation, OOO Plot 1.2 Anxiety}
+check_answer_percent_summary_STAI
+
+#filter out the last 3 trials of each subject
+#check_answer_percent_summary_STAI %>%
+  #group_by(subject) %>%
+  #mutate(last_trial = )
+
+
+subject_dprime_anxiety_df <- illegal_anxiety_df %>%
+  select(subject, transition_threat, dprime, anxiety_level)
+subject_dprime_anxiety_df
+
+dprime_anxiety_binned_df <- subject_dprime_anxiety_df %>%
+  mutate(anxiety_binned = case_when(
+    anxiety_level == 'low trait anxiety' | anxiety_level == 'moderate trait anxiety' ~ 'low to moderate trait anxiety',
+    anxiety_level == 'high trait anxiety' ~ 'high trait anxiety'
+  ))
+dprime_anxiety_binned_df
+
+
+#GRAPHS
+ggplot(dprime_anxiety_binned_df, aes(x = transition_threat, y = dprime, fill=anxiety_binned)) +
+  geom_boxplot(alpha=0.5) +
+  geom_jitter(width=0.1) +
+  labs(title = "D Prime by Transition Type in Illegal Transition Task", x = "Transition Type", y = "D Prime Score",
+       fill = "Transition Type") +
+  scale_fill_manual(values = c("high trait anxiety" = "red", "low to moderate trait anxiety" = "blue"),
+    labels = c("High Trait Anxiety", "Low to Moderate Trait Anxiety"))
+
+##PAIRED T TEST
+dprime_anxiety_binned_df
+
+t.test(dprime_anxiety_binned_df$dprime ~ dprime_anxiety_binned_df$transition_threat, mu = 0,
+       alternative = "greater",
+       paired = TRUE,
+       var.equal = FALSE,
+       conf.level = 0.95)
+
+
+##ANOVA TO ADD STAI SCORES IN
+# Create a new data frame with the desired groups
+grouped_data <- subset(dprime_anxiety_binned_df, 
+                       (transition_threat == "contains_threat" & 
+                          anxiety_binned %in% c("high trait anxiety", "low to moderate trait anxiety")) |
+                         (transition_threat == "no_threat" & 
+                            anxiety_binned %in% c("high trait anxiety", "low to moderate trait anxiety")))
+
+# Perform ANOVA
+model <- aov(dprime ~ transition_threat * anxiety_binned, data = grouped_data)
+
+# Print the ANOVA table
+summary(model)
+```
+
+```{r data manipulation, OOO Plot 1.2 Anxiety}
+# Combine data frames for all subjects
+subject_index <- which(names(avg_check_answer_acc_df_list) == "a3uv55hc87do9c")
+subject_index
+
+combined_df <- do.call(rbind, avg_check_answer_acc_df_list[-subject_index])
+
+
+
+# Calculate average values for threat and neutral
+average_df <- combined_df %>%
+  group_by(trialCount) %>%
+  summarize(threat = mean(threat), neutral = mean(neutral))
+
+# Make the average plot
+plot <- ggplot(average_df) +
+  geom_line(aes(x = trialCount, y = threat, color = "Threat"), size = 1.6) +
+  geom_line(aes(x = trialCount, y = neutral, color = "Neutral"), size = 1.6) +
+  geom_point(aes(x = trialCount, y = threat, color = "Threat"), size = 1.6) +
+  geom_point(aes(x = trialCount, y = neutral, color = "Neutral"), size = 1.6) +
+  labs(title = "Average Plot", x = "Trial", y = "Accuracy (%)") +
+  scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
+
+
+# Print the average plot
+print(plot)
+
+
+#plot for average across subjects
+plot_avg <- plot
+plot_avg
+
+# Iterate through each subject's data frame and add semi-transparent thin lines to the plot_avg
+for (subject in unique_subjects) {
+  # Get data frame for the current subject
+  subject_df <- avg_check_answer_acc_df_list[[subject]]
+  
+  # Check the maximum trial count for the current subject
+  if (max(subject_df$trialCount) != 4 && subject != "a3uv55hc87do9c") {
+    # Add semi-transparent lines for the current subject to the plot_avg
+    plot_avg <- plot_avg +
+      geom_line(data = subject_df, aes(x = trialCount, y = threat), color = "red", alpha = 0.3) +
+      geom_line(data = subject_df, aes(x = trialCount, y = neutral), color = "blue", alpha = 0.3)
+  }
+}
+
+# Display the plot_avg
+plot_avg
+```
+
+
+
+
+
+
+
+
+

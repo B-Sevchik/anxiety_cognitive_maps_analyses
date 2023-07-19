@@ -1,0 +1,94 @@
+---
+title: "check_answer_event_plots_NEW"
+author: "Brooke Sevchik"
+date: "7/10/2023"
+output: html_document
+---
+#run this after check_answer_event_plots!
+
+
+#individual subject plots
+```{r data manipulation & plot, Check Answer Plot 1}
+avg_check_answer_acc_df_list
+# Iterate through data frame for each subject
+for (subject in unique_subjects) {
+  # Get data frame for current subject
+  subject_df <- avg_check_answer_acc_df_list[[subject]]
+  # Check the maximum trial count
+  if (max(subject_df$trialCount) != 4) {
+    # Make the plot for current subject
+    plot <- ggplot(subject_df) +
+      geom_line(aes(x = trialCount, y = threat, color = "Threat")) +
+      geom_line(aes(x = trialCount, y = neutral, color = "Neutral")) +
+      geom_point(aes(x = trialCount, y = threat, color = "Threat")) +
+      geom_point(aes(x = trialCount, y = neutral, color = "Neutral")) +
+      labs(title = paste("Subject:", subject), x = "Trial", y = "Accuracy (%)") +
+      scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
+    # Print plot for subject
+    print(plot)
+  }
+}
+
+
+```
+
+
+#across subjects plot
+```{r plot, Check Answer Plot 2 (Across Subjects)}
+
+# Combine data frames for all subjects
+subject_index <- which(names(avg_check_answer_acc_df_list) == "a3uv55hc87do9c")
+subject_index
+
+combined_df <- do.call(rbind, avg_check_answer_acc_df_list[-subject_index])
+
+
+
+# Calculate average values for threat and neutral
+average_df <- combined_df %>%
+  group_by(trialCount) %>%
+  summarize(threat = mean(threat), neutral = mean(neutral))
+
+# Make the average plot
+plot <- ggplot(average_df) +
+  geom_line(aes(x = trialCount, y = threat, color = "Threat"), size = 1.6) +
+  geom_line(aes(x = trialCount, y = neutral, color = "Neutral"), size = 1.6) +
+  geom_point(aes(x = trialCount, y = threat, color = "Threat"), size = 1.6) +
+  geom_point(aes(x = trialCount, y = neutral, color = "Neutral"), size = 1.6) +
+  labs(title = "Average Plot", x = "Trial", y = "Accuracy (%)") +
+  scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
+
+
+# Print the average plot
+print(plot)
+```
+
+```{r plot, Check Answer Plot 2 (Across Subjects)}
+
+#plot for average across subjects
+plot_avg <- plot
+plot_avg
+
+# Iterate through each subject's data frame and add semi-transparent thin lines to the plot_avg
+for (subject in unique_subjects) {
+  # Get data frame for the current subject
+  subject_df <- avg_check_answer_acc_df_list[[subject]]
+  
+  # Check the maximum trial count for the current subject
+  if (max(subject_df$trialCount) != 4 && subject != "a3uv55hc87do9c") {
+    # Add semi-transparent lines for the current subject to the plot_avg
+    plot_avg <- plot_avg +
+      geom_line(data = subject_df, aes(x = trialCount, y = threat), color = "red", alpha = 0.3) +
+      geom_line(data = subject_df, aes(x = trialCount, y = neutral), color = "blue", alpha = 0.3)
+  }
+}
+
+# Display the plot_avg
+plot_avg
+
+
+
+
+```
+
+

@@ -9,6 +9,7 @@ output: html_document
 
 #individual subject plots
 ```{r data manipulation & plot, Check Answer Plot 1}
+avg_check_answer_acc_df_list
 #iterate through data frame for each subject
 for (subject in unique_subjects) {
   #get data frame for current subject
