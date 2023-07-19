@@ -69,6 +69,16 @@ check_answer_df_list
 #options(max.print = Inf)
 #View(check_answer_df_list[[2]])
 
+#filter out the last 3 trials for each subject
+#check_answer_df_list <- lapply(check_answer_df_list, function(df) {
+  #df %>%
+    #group_by(subject) %>%
+    #mutate(last_trial = max(trialCount)) %>%
+    #filter(trialCount < last_trial - 2) %>%
+    #select(-last_trial)
+#})
+#check_answer_df_list
+
 
 #CHANGE THE NAMES OF THE COLUMNS TO THREAT OR NEUTRAL CORRESPONDING TO LISTS OF THREAT AND NEUTRAL SLOTS FOR EACH SUBJECT GENERATED EARLIER
 #iterate through each subject's check answer data frame
@@ -95,6 +105,7 @@ for (subject in unique_subjects) {
   check_answer_df_list[[subject]] <- check_answer_df_subject
 }
 check_answer_df_list
+
 
 #CREATE NEW DATA FRAME SHOWING, FOR EACH SUBJECT, WHICH WAS FIRST TO BE ALL CORRECT (THREAT OR NEUTRAL)?
 

@@ -1,0 +1,317 @@
+---
+title: "Poster Scripts"
+author: "Brooke Sevchik"
+date: "7/17/2023"
+output: html_document
+---
+
+
+
+```{r data manipulation, Odd One Out Task}
+ooo_anxiety_df
+
+ooo_anxiety_binned_df <- ooo_anxiety_df %>%
+  mutate(anxiety_binned = case_when(
+    anxiety_level == 'low trait anxiety' | anxiety_level == 'moderate trait anxiety' ~ 'low to moderate trait anxiety',
+    anxiety_level == 'high trait anxiety' ~ 'high trait anxiety'
+  ))
+ooo_anxiety_binned_df
+
+threat_percent_anxiety_binned_df <- ooo_anxiety_binned_df  %>%
+  group_by(subject) %>% 
+  summarise(n_chose_threat = sum(chosenThreatStatus == 'threat'), n_total = n(), percentage_chose_threat = n_chose_threat/n_total, anxiety_binned = anxiety_binned, chosenThreatStatus= chosenThreatStatus) %>%
+  na.omit()
+threat_percent_anxiety_binned_df
+
+#neutral_percent_anxiety_binned_df <- ooo_anxiety_binned_df %>%
+  #group_by(subject) %>%
+  #summarise(n_chose_neutral = sum(chosenThreatStatus == 'neutral'), n_total = n(), percentage_chose_neutral = n_chose_neutral/n_total, anxiety_binned = anxiety_binned)
+#neutral_percent_anxiety_binned_df
+
+
+#GRAPHS
+ggplot(data = threat_percent_anxiety_binned_df, mapping = aes(x = anxiety_binned, y = percentage_chose_threat, fill = anxiety_binned)) +
+  geom_boxplot(alpha = 0.5, outlier.shape = NA) +
+  #geom_jitter(position = position_jitter(width = 0.05)) +
+  geom_point(position = position_jitterdodge(jitter.width = 0.3)) +
+  geom_hline(yintercept = 0.5, linetype = "dotted", color = "red")+
+  labs(title = "% Each Subject Chose Threat over Neutral Inaccurate Images in Odd One Out Task", x = "Anxiety Level", y = "Percentage")
+
+
+#T-TEST - OVERALL
+#calculate the mean and standard deviation
+mean_percentage_chose_threat <- mean(threat_percent_anxiety_binned_df$percentage_chose_threat)
+sd_percentage_chose_threat <- sd(threat_percent_anxiety_binned_df$percentage_chose_threat)
+
+#one-sample t-test
+t_test_result <- t.test(threat_percent_anxiety_binned_df$percentage_chose_threat, mu = 0.5)
+
+#print result
+print(t_test_result)
+
+
+#T-TEST FOR EACH ANXIETY LEVEL
+#create high anxiety df
+threat_percent_high_anxiety_binned <- threat_percent_anxiety_binned_df %>%
+  filter(anxiety_binned == 'high trait anxiety')
+threat_percent_high_anxiety_binned
+
+#calculate the mean and standard deviation
+mean_percentage_chose_threat <- mean(threat_percent_high_anxiety_binned$percentage_chose_threat)
+sd_percentage_chose_threat <- sd(threat_percent_high_anxiety_binned$percentage_chose_threat)
+#one-sample t-test
+t_test_result <- t.test(threat_percent_high_anxiety_binned$percentage_chose_threat, mu = 0.5, alternative = "greater")
+#print result
+print(t_test_result)
+
+
+#creaet low to moderate anxiety df
+threat_percent_low_anxiety_binned <- threat_percent_anxiety_binned_df %>%
+  filter(anxiety_binned == 'low to moderate trait anxiety')
+threat_percent_low_anxiety_binned
+
+#calculate the mean and standard deviation
+mean_percentage_chose_threat <- mean(threat_percent_low_anxiety_binned$percentage_chose_threat)
+sd_percentage_chose_threat <- sd(threat_percent_low_anxiety_binned$percentage_chose_threat)
+#one-sample t-test
+t_test_result <- t.test(threat_percent_low_anxiety_binned$percentage_chose_threat, mu = 0.5, alternative = "greater")
+#print result
+print(t_test_result)
+
+
+
+
+#showing overall accuracy/ceiling effect:
+
+STAI_subject_acc_ooo_df
+
+STAI_binned_acc_ooo <- STAI_subject_acc_ooo_df %>%
+  mutate(anxiety_binned = case_when(
+    anxiety_level == 'low trait anxiety' | anxiety_level == 'moderate trait anxiety' ~ 'low to moderate trait anxiety',
+    anxiety_level == 'high trait anxiety' ~ 'high trait anxiety'
+  ))
+STAI_binned_acc_ooo
+
+ggplot(STAI_binned_acc_ooo, aes(x = chosenThreatStatus, y = mean_acc, fill = anxiety_binned))+
+  geom_boxplot(alpha = 0.5, outlier.shape = NA) +
+  geom_point(position = position_jitterdodge(jitter.width = 0.1)) +
+  labs(title = "Mean Accuracy by Subject in OOO by CHosen Threat and Anxiety", x = "Chosen Threat Status", y = "Mean Accuracy")
+
+```
+We investigated, for the trials in which the participant chose incorrectly in the odd one out task, and the other incorrect option of the three was of the opposite valence of the chosen incorrect image, were the participants more likely to chosoe the threat incorrect option or the neutral incorrect option?
+To do so, we compared their percentage/likelihood of picking the threat incorrect option to chance (50%).
+There was no significant percentage over chance (50%) that a subject chose a threat over a neutral image in these trials.
+This was not modulated by trait anxiety level either; there was no significant percentage over chance that a high anxiety or a low to moderate trait anxiety subject would choose a threat over a neutral images in these trials, as evidenced by separate one-sample t-tests for the low to moderate anxiety group and the high anxiety group.
+This demonstrates a "ceiling effect," since everyone generally did really well on the task.
+The last graph demonstrates how well people did on the task to show this "ceiling effect."
+
+
+#We investigated, for the trials in which the participant chose incorrectly in the odd one out task, and the other incorrect option of the three was of the opposite valence of the chosen incorrect image, were the participants more likely to choose the threat incorrect option or the neutral incorrect option?
+
+#There was no significant difference between the mean percentage that a subject chose a threat over a neutral image in these trials (p = 0.4778 > 0.05, paired t-test).
+#There was no significant difference modulated by trait anxiety level in mean percentage that a subject chose a threat over a neutral image in these trials, or significant interaction between trait anxiety level and mean percentage a subject chose a threat over a neutral image.
+
+
+
+
+
+```{r data manipulation, Illegal Transition Task}
+subject_dprime_anxiety_df <- illegal_anxiety_df %>%
+  select(subject, transition_threat, dprime, anxiety_level)
+subject_dprime_anxiety_df
+
+dprime_anxiety_binned_df <- subject_dprime_anxiety_df %>%
+  mutate(anxiety_binned = case_when(
+    anxiety_level == 'low trait anxiety' | anxiety_level == 'moderate trait anxiety' ~ 'low to moderate trait anxiety',
+    anxiety_level == 'high trait anxiety' ~ 'high trait anxiety'
+  ))
+dprime_anxiety_binned_df
+
+
+#GRAPHS
+ggplot(dprime_anxiety_binned_df, aes(x = transition_threat, y = dprime, fill = anxiety_binned)) +
+  geom_boxplot(alpha = 0.5, outlier.shape = NA) +
+  #geom_jitter(width = 0.1) +
+  geom_point(position = position_jitterdodge(jitter.width = 0.1)) +
+  labs(title = "D Prime by Transition Type in Illegal Transition Task", x = "Transition Type", y = "D Prime Score",
+       fill = "Transition Type") +
+  scale_fill_manual(values = c("high trait anxiety" = "red", "low to moderate trait anxiety" = "blue"),
+                    labels = c("High Trait Anxiety", "Low to Moderate Trait Anxiety"))
+
+
+
+##PAIRED T TEST
+dprime_anxiety_binned_df
+
+t.test(dprime_anxiety_binned_df$dprime ~ dprime_anxiety_binned_df$transition_threat, mu = 0,
+       alternative = "greater",
+       paired = TRUE,
+       var.equal = FALSE,
+       conf.level = 0.95)
+
+
+##ANOVA TO ADD STAI SCORES IN
+# Create a new data frame with the desired groups
+grouped_data <- subset(dprime_anxiety_binned_df, 
+                       (transition_threat == "contains_threat" & 
+                          anxiety_binned %in% c("high trait anxiety", "low to moderate trait anxiety")) |
+                         (transition_threat == "no_threat" & 
+                            anxiety_binned %in% c("high trait anxiety", "low to moderate trait anxiety")))
+
+# Perform ANOVA
+model <- aov(dprime ~ transition_threat * anxiety_binned, data = grouped_data)
+
+# Print the ANOVA table
+summary(model)
+
+
+#check the means to see which is higher
+dprime_anxiety_binned_df_means <- dprime_anxiety_binned_df %>%
+  group_by(anxiety_binned) %>%
+  summarise(mean_dprime = mean(dprime, na.rm = TRUE))
+dprime_anxiety_binned_df_means
+
+```
+There is a significant difference between mean d’ scores for transition involving a threat image versus transitions only involving neutral images (p = 0.0004357 > 0.05, paired t-test).
+
+Participants with high trait anxiety have significantly higher d'scores overall (mean dprime 3.19 significantly greater than mean dprime 2.88), but this is not modulated by threat versus neutral images, as there is no interaction between whether or not a transition involves a threat image and trait anxiety score.
+
+
+```{r}
+check_answer_percent_summary_STAI
+
+exclude_df <- check_answer_percent_summary_STAI %>%
+  filter(threat_status == 'equal') %>%
+  filter(percentage == 100)
+exclude_df
+
+check_answer_percent_STAI_filtered <- check_answer_percent_summary_STAI %>%
+  filter(!(subject %in% exclude_df$subject))
+check_answer_percent_STAI_filtered
+
+check_answer_percent_STAI_binned <- check_answer_percent_STAI_filtered %>%
+  mutate(anxiety_binned = case_when(
+    anxiety_level == 'low trait anxiety' | anxiety_level == 'moderate trait anxiety' ~ 'low to moderate trait anxiety',
+    anxiety_level == 'high trait anxiety' ~ 'high trait anxiety'
+  ))
+check_answer_percent_STAI_binned
+
+
+#GRAPHS
+ggplot(check_answer_percent_STAI_binned, aes(x = threat_status, y = percentage, fill=anxiety_binned)) +
+  geom_boxplot(alpha=0.5) +
+  #geom_jitter(width=0.1) +
+  geom_point(position = position_jitterdodge(jitter.width = 0.1)) +
+  labs(title = "Check Answer Graph", x = "Threat Status", y = "Percentage",
+       fill = "Anxiety Level") +
+  scale_fill_manual(values = c("high trait anxiety" = "red", "low to moderate trait anxiety" = "blue"),
+    labels = c("High Trait Anxiety", "Low to Moderate Trait Anxiety"))
+
+##PAIRED T TEST
+
+#exclude the 'equal' cases to just compare threat vs. neutral in t-test
+check_answer_percent_STAI_binned_2 <- check_answer_percent_STAI_binned %>%
+  filter(threat_status == 'threat' | threat_status == 'neutral')
+check_answer_percent_STAI_binned_2
+
+
+t.test(check_answer_percent_STAI_binned_2$percentage ~ check_answer_percent_STAI_binned_2$threat_status, mu = 0,
+       alternative = "greater",
+       paired = TRUE,
+       var.equal = FALSE,
+       conf.level = 0.95)
+
+
+##ANOVA TO ADD STAI SCORES IN
+# Create a new data frame with the desired groups
+grouped_data <- subset(check_answer_percent_STAI_binned_2, 
+                       (threat_status == "threat" & 
+                          anxiety_binned %in% c("high trait anxiety", "low to moderate trait anxiety")) |
+                         (threat_status == "neutral" & 
+                            anxiety_binned %in% c("high trait anxiety", "low to moderate trait anxiety")))
+
+# Perform ANOVA
+model <- aov(percentage ~ threat_status * anxiety_binned, data = grouped_data)
+
+# Print the ANOVA table
+summary(model)
+
+
+
+#check the means to see which is higher
+percentage_anxiety_binned_df_means <- check_answer_percent_STAI_binned %>%
+  group_by(threat_status) %>%
+  summarise(mean_percentage = mean(percentage, na.rm = TRUE))
+percentage_anxiety_binned_df_means
+```
+
+Threat mean > % than neutral mean
+Which threat type is 100% correct first in the initial learning phase drag and drop task? Did people generally learn the threat images faster, i.e., across trials the percentage probability did they learn it 100% first more likely for threat images or neutral images?
+
+The vast majority of trials for each subject, each person got threat and neutral ianges all correct at the same time, i.e., within the same trial.
+The percentage that they learned all threat images first is significantly larger than the percentage that they learned all neutral images first. This is not modulated by anxiety, and people with high versus low to moderate anxiety generally did not influence the percentage they learned all threat images first before neutral images.
+
+
+
+```{r data manipulation, OOO Plot 1.2 Anxiety}
+# Combine data frames for all subjects
+subject_index <- which(names(avg_check_answer_acc_df_list) == "a3uv55hc87do9c")
+subject_index
+
+combined_df <- do.call(rbind, avg_check_answer_acc_df_list[-subject_index])
+
+
+
+# Calculate average values for threat and neutral
+average_df <- combined_df %>%
+  group_by(trialCount) %>%
+  summarize(threat = mean(threat), neutral = mean(neutral))
+
+# Make the average plot
+plot <- ggplot(average_df) +
+  geom_line(aes(x = trialCount, y = threat, color = "Threat"), size = 1.6) +
+  geom_line(aes(x = trialCount, y = neutral, color = "Neutral"), size = 1.6) +
+  geom_point(aes(x = trialCount, y = threat, color = "Threat"), size = 1.6) +
+  geom_point(aes(x = trialCount, y = neutral, color = "Neutral"), size = 1.6) +
+  labs(title = "Average Plot", x = "Trial", y = "Accuracy (%)") +
+  scale_color_manual(values = c(Threat = "red", Neutral = "blue"))
+
+
+# Print the average plot
+print(plot)
+
+
+
+
+#ADD THE INDIVIDUAL TRAJECTORIES ON TOP OF IT
+#plot for average across subjects
+plot_avg <- plot
+plot_avg
+
+# Iterate through each subject's data frame and add semi-transparent thin lines to the plot_avg
+for (subject in unique_subjects) {
+  # Get data frame for the current subject
+  subject_df <- avg_check_answer_acc_df_list[[subject]]
+  
+  # Check the maximum trial count for the current subject
+  if (max(subject_df$trialCount) != 4 && subject != "a3uv55hc87do9c") {
+    # Add semi-transparent lines for the current subject to the plot_avg
+    plot_avg <- plot_avg +
+      geom_line(data = subject_df, aes(x = trialCount, y = threat), color = "red", alpha = 0.3) +
+      geom_line(data = subject_df, aes(x = trialCount, y = neutral), color = "blue", alpha = 0.3)
+  }
+}
+
+# Display the plot_avg
+plot_avg
+```
+This plot shows the learning trajectory for the drag and drop task, with indiivdual learning trajectories plotted thinner and semi-transparent, and the average learning trajectory across participants with a thicker, more opaque line. We can see across trials, performance generally improves until they reach 100% and have met the conditions to learn it well enough to exit this task.
+We can see, overall, that the individual learning trajectories differ for learning teh threat images versus the neutral images in some cases...(put this graph first)...is this learning of the threat images versus the neutral images in the structure significantly different?
+
+
+
+
+
+
+
+
