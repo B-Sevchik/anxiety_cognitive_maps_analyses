@@ -35,7 +35,7 @@ ggplot(data = threat_percent_anxiety_binned_df, mapping = aes(x = anxiety_binned
   #geom_jitter(position = position_jitter(width = 0.05)) +
   geom_point(position = position_jitterdodge(jitter.width = 0.3)) +
   geom_hline(yintercept = 0.5, linetype = "dotted", color = "red")+
-  labs(title = "Percentage of Trials Image Valence Type Incorrectly Chosen", x = " Trait Anxiety Level", y = "Percentage", color = "Anxiety Level")+
+  labs(title = "Percentage of Trials Threat Valence Image Incorrectly Chosen", x = " Trait Anxiety Level", y = "Percentage", color = "Anxiety Level")+
   theme(legend.position = "none")
 
 
